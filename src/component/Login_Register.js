@@ -13,7 +13,6 @@ const Login_Register = () => {
     const handleSubmit = (event) =>{
         event.preventDefault()
         console.log(inputs)
-        alert(inputs)
     }
 
     return (
@@ -31,11 +30,9 @@ const Login_Register = () => {
                 
                 <p className="forget_password">Forgot Password?</p>
 
-                <div className="form_control">
-                    <input type="submit" value={"Sign In"} className="btn"/>
-                </div>
+                <button className="btn">Sign In</button>
 
-                <p className="line_break">or continue with</p>
+                <p className="line_break">Or continue with</p>
                 
                 <div className="form_control flex">
                     <div className="sign-in-options">
