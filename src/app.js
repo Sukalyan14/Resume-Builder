@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM  from "react-dom/client";
-import Login_Register  from "./component/Login_Register";
+import Login  from "./component/Login";
+import Register from "./component/Register";
+import { createBrowserRouter , Outlet , RouterProvider } from "react-router-dom";
 
 const AppLayout = () => {
+    const [ form , setForm ] = useState("login")
+
+    const toggleForm = (formName) => {
+        console.log(formName);
+        setForm(formName)
+    }
+
     return (
         <>
-            <Login_Register/>
+            { form === 'login' ? <Login onFormSwitch = {toggleForm} /> : <Register onFormSwitch = {toggleForm}/>}
+            {/* <Body/> */}
+            {/* <Login/> */}
+            {/* <Register/> */}
         </>
     )
 }

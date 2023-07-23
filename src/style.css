@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;700&display=swap');
+:root{
+    --input-field-color: rgba( 253, 254, 254 , 0.5);
+    --input-field-border:#C0C0C0;
+    --background-color: #ABB4C1;
+    --arrow-color:#abb2b9 ;
+    --button-color:#e91e63;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
+    font-family: 'Lato', sans-serif;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: var(--background-color); */
+}
+
+h2 {
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+h3{
+    font-weight: 400;
+    line-height: 1.2;
+    font-size: 16px;
+}
+
+input{
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 9px;
+    outline: none;
+    border: none;
+    background-color: var(--input-field-color);
+    border: 0.89px solid var(--input-field-border);
+}
+
+input[type = "text"] , 
+input[type = "password"]{
+    width: 100%;
+}
+
+p{
+    /* margin: 4px; */
+    padding: 4px;
+}
+/* input[type = "text"]:focus , 
+input[type = "password"]:focus{
+    border: 0.89px solid var(--input-field-border);
+} */
+/************🏁🏁Utilities🏁🏁***************/
+.flex{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+/************🏁🏁Login/Register Form Start🏁🏁***************/
+
+.login-register-form{
+    width: 350px;
+    min-height: 550px;   
+    padding: 20px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: #eaecee;
+    border-radius: 20px;
+    box-shadow: 0 4px 30px rgba(15, 15, 15, 0.28);
+    backdrop-filter: blur(1.9px);
+    -webkit-backdrop-filter: blur(1.9px);
+    border: 2px solid rgba(255, 255, 255 , 0.8);
+    overflow: hidden;
+}
+
+.top-container{
+    width: 100%;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 0 0.8em;
+    padding-top: 4.5em;
+    z-index: 0;
+}
+ /*** For Back Drop***/
+.top-container::before{
+    content: "";
+    width: 200%;
+    height: 550px;
+    position: absolute;
+    top: -360px;
+    left: -150px;
+    transform: rotate(-45deg);
+    display: flex;
+    flex-direction: column;
+    border-radius: 50%;
+    background-color: #FFD700;
+    z-index: -20;
+}
+
+.header-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.form_control{
+    /* margin: 14px 5px; */
+    padding: 10px 0;
+}
+
+.login-register-form .forget_password{
+    text-align: end;
+    font-size: 12px;
+}
+
+.login-register-form .forget_password:hover{
+    cursor: default;
+    color: #29b6f6;
+    transition: all 0.3s ease;
+}
+
+.login-register-form .error-message{
+    font-size: 0.7rem;
+    margin-top: 8px;
+    opacity: 0;
+}
+
+/******👇🏻Line Break code Start👇🏻********/
+.login-register-form .line_break{
+    margin: 25px 0;
+    letter-spacing: 1px;
+    font-size: 15px;
+    position:relative;
+}
+
+.login-register-form .line_break::before{
+  content:"";
+  position:absolute;
+  bottom:25%;
+  left:10px;
+  width: 0;
+  height: 0;
+  border-top: 1px solid transparent;
+  border-right: 70px solid var(--arrow-color);
+  border-bottom: 1px solid transparent;
+}
+
+.login-register-form .line_break::after{
+  content:"";
+  position:absolute;
+  bottom:25%;
+  right:10px;
+  width: 0;
+  height: 0;
+  border-top: 1px solid transparent;
+  border-left: 70px solid var(--arrow-color);
+  border-bottom: 1px solid transparent; 
+}
+/******☝🏻Line Break code End☝🏻********/
+
+.register-link{
+    font-size: 12px;
+    margin: 8px;
+}
+
+.register-link:hover{
+    cursor:default;
+}
+
+.register-link span{
+    color:#29b6f6;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.register-link span:hover{
+    cursor: pointer;
+}
+
