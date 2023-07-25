@@ -5,6 +5,9 @@
     --background-color: #ABB4C1;
     --arrow-color:#abb2b9 ;
     --button-color:#e91e63;
+    --header-color:#fff;
+    --top-container-color:#FFD700;
+    --spare-blue:#29b6f6;
 }
 
 *{
@@ -25,11 +28,11 @@ body{
 }
 
 h2 {
-    font-size: 30px;
+    font-size: 35px;
     font-weight: 900;
     line-height: 1.2;
     letter-spacing: 1px;
-    color: #fff;
+    color: var(--header-color);
 }
 
 h3{
@@ -38,6 +41,13 @@ h3{
     font-size: 16px;
 }
 
+h5{
+    color: var(--header-color);
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 1.2;
+    margin-top: 0.6em;
+}
 input{
     padding: 12px;
     font-size: 16px;
@@ -46,6 +56,7 @@ input{
     border: none;
     background-color: var(--input-field-color);
     border: 0.89px solid var(--input-field-border);
+    transition: all 0.3s ease;
 }
 
 input[type = "text"] , 
@@ -57,10 +68,10 @@ p{
     /* margin: 4px; */
     padding: 4px;
 }
-/* input[type = "text"]:focus , 
+input[type = "text"]:focus , 
 input[type = "password"]:focus{
-    border: 0.89px solid var(--input-field-border);
-} */
+    border: 0.89px solid var(--top-container-color);
+}
 /************🏁🏁Utilities🏁🏁***************/
 .flex{
     display: flex;
@@ -77,24 +88,24 @@ input[type = "password"]:focus{
     margin: 10px;
     display: flex;
     flex-direction: column;
-    position: relative;
     background-color: #eaecee;
     border-radius: 20px;
-    box-shadow: 0 4px 30px rgba(15, 15, 15, 0.28);
+    box-shadow: 0 4px 20px rgba(15, 15, 15, 0.28);
     backdrop-filter: blur(1.9px);
     -webkit-backdrop-filter: blur(1.9px);
-    border: 2px solid rgba(255, 255, 255 , 0.8);
+    /* border: 2px solid rgba(255, 255, 255 , 0.8); */
     overflow: hidden;
 }
 
 .top-container{
+    position: relative;
     width: 100%;
     height: 250px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     padding: 0 0.8em;
-    padding-top: 4.5em;
+    padding-top: 3.8em;
     z-index: 0;
 }
  /*** For Back Drop***/
@@ -102,6 +113,7 @@ input[type = "password"]:focus{
     content: "";
     width: 200%;
     height: 550px;
+    /* height: 1500px; */
     position: absolute;
     top: -360px;
     left: -150px;
@@ -109,8 +121,8 @@ input[type = "password"]:focus{
     display: flex;
     flex-direction: column;
     border-radius: 50%;
-    background-color: #FFD700;
-    z-index: -20;
+    background-color: var(--top-container-color);
+    z-index: -21;
 }
 
 .header-container {
@@ -120,10 +132,12 @@ input[type = "password"]:focus{
 }
 
 .form_control{
-    /* margin: 14px 5px; */
-    padding: 10px 0;
+    padding: 0.4em 0;
 }
 
+.login-register-form form{
+    text-align: center;
+}
 .login-register-form .forget_password{
     text-align: end;
     font-size: 12px;
@@ -131,13 +145,13 @@ input[type = "password"]:focus{
 
 .login-register-form .forget_password:hover{
     cursor: default;
-    color: #29b6f6;
+    color: var(--top-container-color);
     transition: all 0.3s ease;
 }
 
 .login-register-form .error-message{
-    font-size: 0.7rem;
-    margin-top: 8px;
+    font-size: 0.65rem;
+    margin-top: 4px;
     opacity: 0;
 }
 
@@ -147,12 +161,13 @@ input[type = "password"]:focus{
     letter-spacing: 1px;
     font-size: 15px;
     position:relative;
+    z-index: -1;
 }
 
 .login-register-form .line_break::before{
   content:"";
   position:absolute;
-  bottom:25%;
+  bottom:40%;
   left:10px;
   width: 0;
   height: 0;
@@ -164,7 +179,7 @@ input[type = "password"]:focus{
 .login-register-form .line_break::after{
   content:"";
   position:absolute;
-  bottom:25%;
+  bottom:40%;
   right:10px;
   width: 0;
   height: 0;
@@ -184,12 +199,11 @@ input[type = "password"]:focus{
 }
 
 .register-link span{
-    color:#29b6f6;
-    font-size: 14px;
-    font-weight: 500;
+    color:var(--top-container-color);
+    font-size: 13px;
+    font-weight: 550;
 }
 
 .register-link span:hover{
     cursor: pointer;
 }
-

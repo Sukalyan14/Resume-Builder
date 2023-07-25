@@ -7,7 +7,7 @@ const IconBox = styled.div`
     padding: 9px 18px;
     border-radius: 10px;
     transition: all 0.3s ease-in-out;
-    z-index: 1;
+    /* z-index: 0; */
     /* background: linear-gradient(145deg, #e6e6e6, #ffffff); */
     /* background-color: ${props => props.$github ? '#000' : 'linear-gradient(145deg, #e6e6e6, #ffffff)'}; */
     background-color: ${(props) => {

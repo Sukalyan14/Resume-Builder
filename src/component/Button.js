@@ -9,12 +9,12 @@ const ButtonStyled = styled.button`
     font-weight: bold;
     padding: 0.5em 2em;
     border: 2px solid var(--button-color);
+    border-radius: 100px 100px 100px 100px;
     position: relative;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
     color: var(--button-color);
     text-decoration: none;
     transition: 0.3s ease all;
-    z-index: 1;
     margin-top: 6px;
 
     &::before {
@@ -27,12 +27,14 @@ const ButtonStyled = styled.button`
         bottom: 0;
         opacity: 0;
         background-color: var(--button-color);
+        border-radius: 100px 100px 100px 100px;
         z-index: -1;
     }
 
     &:hover , &:focus{
         color: #fff;
         cursor: pointer;
+        filter: brightness(1.15);
     }
 
     &:hover::before , &:focus::before{
