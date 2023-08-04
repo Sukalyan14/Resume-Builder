@@ -63,15 +63,15 @@ input[type = "text"] ,
 input[type = "password"]{
     width: 100%;
 }
-
-p{
-    /* margin: 4px; */
-    padding: 4px;
-}
 input[type = "text"]:focus , 
 input[type = "password"]:focus{
     border: 0.89px solid var(--top-container-color);
 }
+p{
+    /* margin: 4px; */
+    padding: 4px;
+}
+
 /************🏁🏁Utilities🏁🏁***************/
 .flex{
     display: flex;
@@ -83,7 +83,8 @@ input[type = "password"]:focus{
 
 .login-register-form{
     width: 350px;
-    min-height: 550px;   
+    height: 750px;   
+    /* min-height: 550px; */
     padding: 20px;
     margin: 10px;
     display: flex;
@@ -106,29 +107,58 @@ input[type = "password"]:focus{
     align-items: flex-end;
     padding: 0 0.8em;
     padding-top: 3.8em;
-    z-index: 0;
+    z-index: 1;
 }
+
  /*** For Back Drop***/
-.top-container::before{
+ .top-container::before{
     content: "";
-    width: 200%;
-    height: 550px;
+    width: 300%;
+    height: 650px;
     /* height: 1500px; */
     position: absolute;
-    top: -360px;
-    left: -150px;
+    top: -500px;
+    left: -210px;
     transform: rotate(-45deg);
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
     border-radius: 50%;
     background-color: var(--top-container-color);
     z-index: -21;
+    transition: all 0.7s;
+    -webkit-transition:height 0.7s;
+    -moz-transition:height 0.7s;
+    -o-transition:height 0.7s;
+    -ms-transition:height 0.7s;
+}
+
+.login-register-form.show-backdrop .top-container::before{
+    animation: expandBackDrop 2s ease;
+}
+
+@keyframes expandBackDrop{
+    0%{
+        width: 300%;
+        height: 650px;
+        z-index: -2;
+    }
+    50%{
+        width: 300%;
+        height: 1750px;
+        z-index: 10;
+    }
+    100%{
+        width: 300%;
+        height: 650px;
+        z-index: -2;
+    }
 }
 
 .header-container {
     width: 100%;
     display: flex;
     flex-direction: column;
+    z-index: 22;
 }
 
 .form_control{
@@ -136,6 +166,7 @@ input[type = "password"]:focus{
 }
 
 .login-register-form form{
+    margin-top: 2em;
     text-align: center;
 }
 .login-register-form .forget_password{
@@ -206,4 +237,8 @@ input[type = "password"]:focus{
 
 .register-link span:hover{
     cursor: pointer;
+}
+
+.register-link:active + .top-container::before{
+    height: 1550px;
 }

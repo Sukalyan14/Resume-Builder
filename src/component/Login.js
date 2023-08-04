@@ -1,11 +1,12 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub , FaApple , FaFacebookF } from "react-icons/fa"
 import '../style.css';
+// import '../index.css';
 import IconBox from "./IconBox";
 import Button from "./Button";
 import { styled } from "styled-components";
-import { motion } from "framer-motion";
+import { BackDropState } from "../app";
 
 // A trial with both styled-components and css
 // const TopContainer = styled.div`
@@ -19,43 +20,53 @@ import { motion } from "framer-motion";
 //     z-index: 0;
 // `
 
-export const BackDrop = styled(motion.div)`
-    width: 200%;
-    height: 550px;
-    position: absolute;
-    top: -360px;
-    left: -150px;
-    transform: rotate(-45deg);
-    display: flex;
-    flex-direction: column;
-    border-radius: 50%;
-    background-color: #FFD700;
-    z-index: -20;
-`
-const BackDropVariant = {
-    expanded:{
-        width:"233%"        
-    }
-}
+// export const BackDrop = styled(motion.div)`
+//     width: 200%;
+//     height: 550px;
+//     position: absolute;
+//     top: -360px;
+//     left: -150px;
+//     transform: rotate(-45deg);
+//     display: flex;
+//     flex-direction: column;
+//     border-radius: 50%;
+//     background-color: #FFD700;
+//     z-index: -20;
+// `
+// const BackDropVariant = {
+//     expanded:{
+//         width:"233%"        
+//     }
+// }
+
 const Login = (props) => {
     const [inputs , setInputs] = useState({})
 
-    const [isExpanded , setExpanded] = useState(false)
+    // const backDrop = useContext(BackDropState)
 
-    const handleChange = (event) => {
-        const { target : { name , value } } = event
-        // setInputs(values => ({...values , [name]:value})) //A function that creates a object and assign keys and value. ['key'] is a way to create dynamic keys
-        setInputs(values => ({...values , [name]:value}))
+    const [backDrop , setBackDrop] = useState(false)
+
+    const toggleBackDrop = () => {
+        setBackDrop(true)
+        setTimeout(()=> {
+            setBackDrop(false)
+        },2055)
     }
 
+    const handleChange = (event) => {
+        const { target : { name , value } } = event 
+        setInputs(values => ({...values , [name]:value}))  //A function that creates a object and assign keys and value. ['key'] is a way to create dynamic keys
+    }
+ 
     const handleSubmit = (event) =>{
         event.preventDefault()
         console.log(inputs)
     }
 
+    // console.log(backDrop);
     return (
         <>
-            <div className="login-register-form">
+            <div className={`login-register-form ${backDrop ? 'show-backdrop' : ''}`}>
                 <div className="top-container">
                     <div className="header-container">
                         <h2>Welcome</h2>
@@ -82,7 +93,7 @@ const Login = (props) => {
                                 
                     <p className="forget_password">Forgot Password?</p>
 
-                    <Button btn_text = "Sign In" />
+                    <Button btn_text = "Sign In" />  {/* Can try a backdrop state based expression for button disappearenc */}
 
                     <p className="line_break">Or continue with</p>
                     
@@ -106,7 +117,16 @@ const Login = (props) => {
 
                     </div>
                     
-                    <p className="register-link">Not a member? <span onClick = {() => props.onFormSwitch('register')}>Register Now</span></p>
+                    <p className="register-link">
+                        Not a member? 
+                        <span onClick = {() => {
+                            // console.log("login click" + backDrop);
+                            props.onFormSwitch('register')
+                            toggleBackDrop()
+                        }}>
+                             Register Now
+                        </span>
+                    </p>
                 </form>
 
             </div>

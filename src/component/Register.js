@@ -1,13 +1,24 @@
-import { useState } from "react"
+import { useState , useContext } from "react"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub , FaApple , FaFacebookF } from "react-icons/fa"
-import '../style.css';
+// import '../style.css';
 import IconBox from "./IconBox";
 import Button from "./Button";
-import { BackDrop } from "./Login";
+import { BackDropState } from "../app";
 
 const Register = (props) => {
     const [inputs , setInputs] = useState({})
+
+    // const backDrop = useContext(BackDropState)
+
+    const [backDrop , setBackDrop] = useState(false)
+
+    const toggleBackDrop = () => {
+        setBackDrop(true)
+        setTimeout(()=> {
+            setBackDrop(false)
+        },2055)
+    }
 
     const handleChange = (event) => {
         const { target : { name , value } } = event
@@ -19,10 +30,10 @@ const Register = (props) => {
         event.preventDefault()
         console.log(inputs)
     }
-
+    console.log(backDrop);
     return (
         <>
-            <div className="login-register-form">
+            <div className={`login-register-form ${backDrop ? 'show-backdrop' : ''}`}>
                 <div className="top-container">
                     <div className="header-container">
                         <h2>Create</h2>
@@ -72,7 +83,16 @@ const Register = (props) => {
 
                     </div>
                     
-                    <p className="register-link">Already A Member ? <span onClick = {() => props.onFormSwitch('login')}>Login Now</span></p>
+                    <p className="register-link">
+                        Not a member? 
+                        <span onClick = {() => {
+                            // console.log("register click" + backDrop);
+                            props.onFormSwitch('login')
+                            toggleBackDrop()
+                        }}>
+                            Log In
+                        </span>
+                    </p>
             </form>
 
             </div>

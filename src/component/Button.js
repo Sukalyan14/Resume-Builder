@@ -16,6 +16,7 @@ const ButtonStyled = styled.button`
     text-decoration: none;
     transition: 0.3s ease all;
     margin-top: 6px;
+    z-index: 0;
 
     &::before {
         content: '';
@@ -28,7 +29,7 @@ const ButtonStyled = styled.button`
         opacity: 0;
         background-color: var(--button-color);
         border-radius: 100px 100px 100px 100px;
-        z-index: -1;
+        z-index: -2;
     }
 
     &:hover , &:focus{
