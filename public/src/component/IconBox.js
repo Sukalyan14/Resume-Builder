@@ -7,9 +7,6 @@ const IconBox = styled.div`
     padding: 9px 18px;
     border-radius: 10px;
     transition: all 0.3s ease-in-out;
-    /* z-index: 0; */
-    /* background: linear-gradient(145deg, #e6e6e6, #ffffff); */
-    /* background-color: ${props => props.$github ? '#000' : 'linear-gradient(145deg, #e6e6e6, #ffffff)'}; */
     background-color: ${(props) => {
         if(props.$github){
             return '#000'
@@ -20,10 +17,10 @@ const IconBox = styled.div`
         }
     }};
     color: ${props => props.$github || props.$facebook ? '#fff' : null};
-    box-shadow:  1px 1px 5px #c7c7c7,
-            -1px -1px 5px #c7c7c7;
+    box-shadow:  1px 1px 3px #c7c7c7,
+            -1px -1px 3px #c7c7c7;
     &:hover {
-        transform: scale(0.9);
+        transform: scale(1.35);
         cursor: pointer;
     }
 `

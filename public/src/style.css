@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;700&display=swap');
 :root{
-    --input-field-color: rgba( 253, 254, 254 , 0.5);
+    --input-field-color: rgba( 242, 243, 244 , 1);
     --input-field-border:#C0C0C0;
-    --background-color: #ABB4C1;
     --arrow-color:#abb2b9 ;
     --button-color:#e91e63;
     --header-color:#fff;
-    --top-container-color:#FFD700;
+    --top-container-color:#ffae00;
     --spare-blue:#29b6f6;
+    --body-bg: #f2f3f4 ;
 }
 
 *{
@@ -24,7 +24,11 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: var(--background-color); */
+    background-color: var(--body-bg);
+    /* background: url('./assets/janosch-diggelmann-7vpWju89jKc-unsplash.jpg');
+    background-position:cover;
+    background-size: contain;
+    background-repeat: no-repeat; */
 }
 
 h2 {
@@ -54,6 +58,8 @@ input{
     border-radius: 9px;
     outline: none;
     border: none;
+    /* background-color: var(--input-field-color); */
+    /* background-color: #eaecee; */
     background-color: var(--input-field-color);
     border: 0.89px solid var(--input-field-border);
     transition: all 0.3s ease;
@@ -65,13 +71,15 @@ input[type = "password"]{
 }
 input[type = "text"]:focus , 
 input[type = "password"]:focus{
-    border: 0.89px solid var(--top-container-color);
+    border: 1px solid var(--top-container-color);
 }
 p{
     /* margin: 4px; */
     padding: 4px;
 }
-
+img{
+    width: 100%;
+}
 /************🏁🏁Utilities🏁🏁***************/
 .flex{
     display: flex;
@@ -79,104 +87,26 @@ p{
     align-items: center;
 }
 
-/************🏁🏁Login/Register Form Start🏁🏁***************/
+/*Styles for Login.js and Register.js*/
 
 .login-register-form{
-    width: 350px;
-    height: 750px;   
-    /* min-height: 550px; */
-    padding: 20px;
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    background-color: #eaecee;
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(15, 15, 15, 0.28);
-    backdrop-filter: blur(1.9px);
-    -webkit-backdrop-filter: blur(1.9px);
-    /* border: 2px solid rgba(255, 255, 255 , 0.8); */
-    overflow: hidden;
-}
-
-.top-container{
-    position: relative;
-    width: 100%;
-    height: 250px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    padding: 0 0.8em;
-    padding-top: 3.8em;
-    z-index: 1;
-}
-
- /*** For Back Drop***/
- .top-container::before{
-    content: "";
-    width: 300%;
-    height: 650px;
-    /* height: 1500px; */
-    position: absolute;
-    top: -500px;
-    left: -210px;
-    transform: rotate(-45deg);
-    /* display: flex;
-    flex-direction: column; */
-    border-radius: 50%;
-    background-color: var(--top-container-color);
-    z-index: -21;
-    transition: all 0.7s;
-    -webkit-transition:height 0.7s;
-    -moz-transition:height 0.7s;
-    -o-transition:height 0.7s;
-    -ms-transition:height 0.7s;
-}
-
-.login-register-form.show-backdrop .top-container::before{
-    animation: expandBackDrop 2s ease;
-}
-
-@keyframes expandBackDrop{
-    0%{
-        width: 300%;
-        height: 650px;
-        z-index: -2;
-    }
-    50%{
-        width: 300%;
-        height: 1750px;
-        z-index: 10;
-    }
-    100%{
-        width: 300%;
-        height: 650px;
-        z-index: -2;
-    }
-}
-
-.header-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    z-index: 22;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    text-align: center;
 }
 
 .form_control{
     padding: 0.4em 0;
 }
 
-.login-register-form form{
-    margin-top: 2em;
-    text-align: center;
-}
 .login-register-form .forget_password{
     text-align: end;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .login-register-form .forget_password:hover{
     cursor: default;
-    color: var(--top-container-color);
+    color: var(--spare-blue);
     transition: all 0.3s ease;
 }
 
@@ -221,7 +151,7 @@ p{
 /******☝🏻Line Break code End☝🏻********/
 
 .register-link{
-    font-size: 12px;
+    font-size: 14px;
     margin: 8px;
 }
 
@@ -230,15 +160,12 @@ p{
 }
 
 .register-link span{
-    color:var(--top-container-color);
-    font-size: 13px;
-    font-weight: 550;
+    color:#F39C12;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .register-link span:hover{
     cursor: pointer;
-}
-
-.register-link:active + .top-container::before{
-    height: 1550px;
+    color: var(--spare-blue);
 }

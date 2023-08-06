@@ -4,7 +4,7 @@
   "description": "React Based Resume Builder",
   "main": "index.js",
   "scripts": {
-    "start": "parcel index.html"
+    "start": "parcel ./public/index.html"
   },
   "author": "Sukalyan",
   "license": "ISC",

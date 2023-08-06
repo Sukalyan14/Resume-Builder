@@ -1,0 +1,1 @@
+const IMG_LANDING_PAGE = ""

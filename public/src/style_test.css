@@ -1,0 +1,246 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;700&display=swap');
+:root{
+    --input-field-color: rgba( 253, 254, 254 , 0.5);
+    --input-field-border:#C0C0C0;
+    --background-color: #ABB4C1;
+    --arrow-color:#abb2b9 ;
+    --button-color:#e91e63;
+    --header-color:#fff;
+    --top-container-color:#FFD700;
+    --spare-blue:#29b6f6;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
+    font-family: 'Lato', sans-serif;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: var(--background-color); */
+}
+
+h2 {
+    font-size: 35px;
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: 1px;
+    color: var(--header-color);
+}
+
+h3{
+    font-weight: 400;
+    line-height: 1.2;
+    font-size: 16px;
+}
+
+h5{
+    color: var(--header-color);
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 1.2;
+    margin-top: 0.6em;
+}
+input{
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 9px;
+    outline: none;
+    border: none;
+    background-color: var(--input-field-color);
+    border: 0.89px solid var(--input-field-border);
+    transition: all 0.3s ease;
+}
+
+input[type = "text"] , 
+input[type = "password"]{
+    width: 100%;
+}
+input[type = "text"]:focus , 
+input[type = "password"]:focus{
+    border: 0.89px solid var(--top-container-color);
+}
+p{
+    /* margin: 4px; */
+    padding: 4px;
+}
+
+/************🏁🏁Utilities🏁🏁***************/
+.flex{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+/************🏁🏁Login/Register Form Start🏁🏁***************/
+
+.login-register-form{
+    width: 350px;
+    height: 750px;   
+    /* min-height: 550px; */
+    padding: 20px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #eaecee;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(15, 15, 15, 0.28);
+    backdrop-filter: blur(1.9px);
+    -webkit-backdrop-filter: blur(1.9px);
+    /* border: 2px solid rgba(255, 255, 255 , 0.8); */
+    overflow: hidden;
+}
+
+.top-container{
+    position: relative;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 0 0.8em;
+    padding-top: 3.8em;
+    z-index: 1;
+}
+
+ /*** For Back Drop***/
+ .top-container::before{
+    content: "";
+    width: 300%;
+    height: 650px;
+    /* height: 1500px; */
+    position: absolute;
+    top: -500px;
+    left: -210px;
+    transform: rotate(-45deg);
+    /* display: flex;
+    flex-direction: column; */
+    border-radius: 50%;
+    background-color: var(--top-container-color);
+    z-index: -21;
+    transition: all 0.7s;
+    -webkit-transition:height 0.7s;
+    -moz-transition:height 0.7s;
+    -o-transition:height 0.7s;
+    -ms-transition:height 0.7s;
+}
+
+.login-register-form.show-backdrop .top-container::before{
+    animation: expandBackDrop 2s ease;
+}
+/* .test{
+    background-color: #e91e63;
+} */
+@keyframes expandBackDrop{
+    0%{
+        width: 300%;
+        height: 650px;
+        z-index: -2;
+    }
+    50%{
+        width: 300%;
+        height: 1750px;
+        z-index: 10;
+    }
+    100%{
+        width: 300%;
+        height: 650px;
+        z-index: -2;
+    }
+}
+
+.header-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: 22;
+}
+
+.form_control{
+    padding: 0.4em 0;
+}
+
+.login-register-form form{
+    margin-top: 2em;
+    text-align: center;
+}
+.login-register-form .forget_password{
+    text-align: end;
+    font-size: 12px;
+}
+
+.login-register-form .forget_password:hover{
+    cursor: default;
+    color: var(--top-container-color);
+    transition: all 0.3s ease;
+}
+
+.login-register-form .error-message{
+    font-size: 0.65rem;
+    margin-top: 4px;
+    opacity: 1;
+}
+
+/******👇🏻Line Break code Start👇🏻********/
+.login-register-form .line_break{
+    margin: 25px 0;
+    letter-spacing: 1px;
+    font-size: 15px;
+    position:relative;
+    z-index: -1;
+}
+
+.login-register-form .line_break::before{
+  content:"";
+  position:absolute;
+  bottom:40%;
+  left:10px;
+  width: 0;
+  height: 0;
+  border-top: 1px solid transparent;
+  border-right: 70px solid var(--arrow-color);
+  border-bottom: 1px solid transparent;
+}
+
+.login-register-form .line_break::after{
+  content:"";
+  position:absolute;
+  bottom:40%;
+  right:10px;
+  width: 0;
+  height: 0;
+  border-top: 1px solid transparent;
+  border-left: 70px solid var(--arrow-color);
+  border-bottom: 1px solid transparent; 
+}
+/******☝🏻Line Break code End☝🏻********/
+
+.register-link{
+    font-size: 12px;
+    margin: 8px;
+}
+
+.register-link:hover{
+    cursor:default;
+}
+
+.register-link span{
+    color:var(--top-container-color);
+    font-size: 13px;
+    font-weight: 550;
+}
+
+.register-link span:hover{
+    cursor: pointer;
+}
+
+.register-link:active + .top-container::before{
+    height: 1550px;
+}
