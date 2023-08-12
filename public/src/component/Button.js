@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import '../style.css';
 
 const ButtonStyled = styled.button`
     width: 100%;
@@ -8,8 +9,9 @@ const ButtonStyled = styled.button`
     text-align: center;
     font-weight: bold;
     padding: 0.5em 2em;
-    border: 2px solid var(--button-color);
-    border-radius: 100px 100px 100px 100px;
+    border: none;
+    /* background: var(--top-container); */
+    border-radius: 100px;
     position: relative;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
     color: var(--button-color);
@@ -27,8 +29,8 @@ const ButtonStyled = styled.button`
         right: 50%;
         bottom: 0;
         opacity: 0;
-        background-color: var(--button-color);
-        border-radius: 100px 100px 100px 100px;
+        background: var(--top-container);
+        border-radius: 100px;
         z-index: -2;
     }
 

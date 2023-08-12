@@ -64,11 +64,12 @@ const TopContainer = styled.div`
         position: absolute;
         top: -500px;
         left: -210px;
-        transform: rotate(-45deg);
+        transform: rotate(-50deg);
         animation: ${' '} 2s ease;
         border-radius: 50%;
-        background-color: #FAD961;
-        background-image: linear-gradient(90deg, #FAD961 0%, #F76B1C 100%);
+        /* background-color: #FAD961; */
+        /* background-color: 'linear-gradient(90deg, #FAD961 0%, #F76B1C 100%)'; */
+        background-image: var(--top-container);
         animation: ${props => (props.$animation_trigger ? Backdrop_animation : ' ')} 1.55s ease;
         z-index: -21;
         transition: all 0.7s;
