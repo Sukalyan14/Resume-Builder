@@ -171,8 +171,9 @@ img{
 
 .register-link span{
     color:#F39C12;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
+    margin: 0 5px;
 }
 
 .register-link span:hover{
