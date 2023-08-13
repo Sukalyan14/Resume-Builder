@@ -3,7 +3,7 @@
     --input-field-color: rgba( 242, 243, 244 , 1);
     --input-field-border:#C0C0C0;
     --arrow-color:#abb2b9 ;
-    /* --button-color:#e91e63; */
+    --error-color:#e91e63;
     --button-color:#f7971e;
     --header-color:#fff;
     /* --top-container:linear-gradient(90deg, #FAD961 0%, #F76B1C 100%); */
@@ -57,6 +57,11 @@ h5{
     line-height: 1.2;
     margin-top: 0.6em;
 }
+
+p{
+    padding: 4px;
+}
+
 input{
     padding: 12px;
     font-size: 16px;
@@ -78,10 +83,7 @@ input[type = "text"]:focus ,
 input[type = "password"]:focus{
     border: 1px solid var(--button-color);
 }
-p{
-    /* margin: 4px; */
-    padding: 4px;
-}
+
 img{
     width: 100%;
 }
@@ -116,9 +118,12 @@ img{
 }
 
 .login-register-form .error-message{
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     margin-top: 4px;
-    opacity: 0;
+    padding: 4px;
+    min-height: 20px;
+    color: var(--error-color);
+    /* opacity: 0; */
 }
 
 /******👇🏻Line Break code Start👇🏻********/
