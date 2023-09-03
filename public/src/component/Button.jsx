@@ -10,6 +10,7 @@ const ButtonStyled = styled.button`
     font-weight: bold;
     padding: 0.5em 2em;
     border: none;
+    outline: none;
     /* background: var(--top-container); */
     border-radius: 100px;
     position: relative;

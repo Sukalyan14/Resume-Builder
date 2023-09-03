@@ -4,7 +4,7 @@ import { FaGithub , FaApple , FaFacebookF } from "react-icons/fa"
 import '../style.css';
 import IconBox from "./IconBox";
 import Button from "./Button";
-import { UPDATE_FORM , onFocusOut, onInputChange } from "../utils/formUtils";
+import { UPDATE_FORM , onFocusOut, onInputChange, validateInput } from "../utils/formUtils";
 
 function formReducer(state , action){
     switch (action.type){
@@ -22,15 +22,43 @@ function formReducer(state , action){
 
 const Login = (props) => {
 
-    // const [inputs , setInputs] = useState()
     const [formState , dispatch] = useReducer(formReducer , {isFormValid:false})
     
+    const [showError , setShowError] = useState(false)
+
     const handleSubmit = (event) =>{
         event.preventDefault()
-        console.log(2);
+
+        let isFormValid = true
+
+        for (const name in formState){
+            const item = formState[name]
+            const { value } = item
+            const { hasError , error } = validateInput( name , value)
+
+            if(hasError){
+                isFormValid = false
+            }
+
+            if(name){
+                dispatch({
+                    type: UPDATE_FORM , 
+                    data:{ name , value , hasError , error , touched:true , isFormValid }
+                })
+            }
+        }
+
+        if(!isFormValid) {
+            setShowError(true)
+        } else {
+            console.log(formState);
+        }
+
+        setTimeout(() => {
+            setShowError(false)
+        } , 5000)
     }
-    // console.table({"name":formState.email});
-    console.log(formState.password);
+    
     return (
         <>
             <form className="login-register-form" onSubmit={handleSubmit}>

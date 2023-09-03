@@ -1,23 +1,69 @@
-import { useState , useContext } from "react"
+import { useState , useReducer } from "react"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub , FaApple , FaFacebookF } from "react-icons/fa"
-// import '../style.css';
+import { UPDATE_FORM , onInputChange , onFocusOut , validateInput } from "../utils/formUtils";
+import '../style.css';
 import IconBox from "./IconBox";
 import Button from "./Button";
-import { BackDropState } from "../app";
+import axios from "axios";
+
+function addPosts(data){
+    axios.post("http://localhost:3000")
+}
+
+function formReducer(state , action){
+    switch (action.type){
+        case UPDATE_FORM:
+            const { name , value , hasError , error , touched , isFormValid } = action.data
+            return {
+                ...state , 
+                [name] : {...state[name] , value , hasError , error , touched},
+                isFormValid,
+            }
+        default:
+            return state
+    }
+}
 
 const Register = (props) => {
-    const [inputs , setInputs] = useState({})
+    
+    const [formState , dispatch] = useReducer(formReducer , {isFormValid:false})
 
-    const handleChange = (event) => {
-        const { target : { name , value } } = event
-        // setInputs(values => ({...values , [name]:value})) //A function that creates a object and assign keys and value. ['key'] is a way to create dynamic keys
-        setInputs(values => ({...values , [name]:value}))
-    }
+    const [showError , setShowError] = useState(false)
 
     const handleSubmit = (event) =>{
         event.preventDefault()
-        console.log(inputs)
+
+        let isFormValid = true
+
+        for (const name in formState){
+            const item = formState[name]
+            const { value } = item
+            const { hasError , error } = validateInput( name , value , formState )
+
+            if(hasError){
+                isFormValid = false
+            }
+
+            if(name){
+                dispatch({
+                    type: UPDATE_FORM , 
+                    data:{ name , value , hasError , error , touched:true , isFormValid }
+                })
+            }
+        }
+
+        if(!isFormValid) {
+            setShowError(true)
+        } else {
+            //submit form to backend
+            // console.log(formState);
+            addPosts(formState)
+        }
+
+        setTimeout(() => {
+            setShowError(false)
+        } , 5000)
     }
     
     return (
@@ -25,18 +71,37 @@ const Register = (props) => {
             <form className="login-register-form" onSubmit={handleSubmit} >
             
                 <div className="form_control">
-                    <input type="text" name="email" value={inputs.email || ""} onChange={handleChange} placeholder="Email" required/>
-                    <p className="error-message">Error Message</p>
+                    <input 
+                        type="text" 
+                        name="email" 
+                        value={formState.email ? formState.email.value : ""} 
+                        onChange={e => {onInputChange("email" , e.target.value , dispatch , formState)}}  
+                        onBlur={e => {onFocusOut("email" , e.target.value , dispatch , formState)}}
+                        placeholder="Email"/>
+    
+                    <div className="error-message">{(formState.email && formState.email.touched && formState.email.hasError) ? formState.email.error : " "}</div>
                 </div>
                     
                 <div className="form_control">
-                    <input type="password" name="password" value={inputs.password || ""} onChange={handleChange} placeholder="Password" required/>
-                    <p className="error-message">Error Message</p>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        value={formState.password ? formState.password.value : ""} 
+                        onChange={e => {onInputChange("password" , e.target.value , dispatch , formState)}} 
+                        onBlur={e => {onFocusOut("password" , e.target.value , dispatch , formState)}}
+                        placeholder="Password" required />
+                    <div className="error-message">{(formState.password && formState.password.touched && formState.password.hasError) ? formState.password.error : " "}</div>
                 </div>
                                     
                 <div className="form_control">
-                    <input type="password" name="confirm_password" value={inputs.confirm_password || ""} onChange={handleChange} placeholder="Confirm Password" required/>
-                    <p className="error-message">Error Message</p>
+                    <input 
+                        type="password" 
+                        name="confirm_password" 
+                        value={formState.confirm_password ? formState.confirm_password.value : ""} 
+                        onChange={e => {onInputChange("confirm_password" , e.target.value , dispatch , formState)}} 
+                        onBlur={e => {onFocusOut("confirm_password" , e.target.value , dispatch , formState)}}
+                        placeholder="Confirm Password" required />
+                    <div className="error-message">{(formState.confirm_password && formState.confirm_password.touched && formState.confirm_password.hasError) ? formState.confirm_password.error : " "}</div>
                 </div>
 
                 <Button btn_text = "Sign Up"/>

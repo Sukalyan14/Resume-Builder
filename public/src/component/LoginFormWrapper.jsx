@@ -90,7 +90,7 @@ const HeaderContainer = styled.div`
 const LoginFormWrapper = () => {
 
     const [animation_toggle , setAnimation_toggle] = useState(false)
-    const [form , setForm] = useState('login')
+    const [form , setForm] = useState('register')
 
     const toggle = () => {
         setAnimation_toggle(true)
