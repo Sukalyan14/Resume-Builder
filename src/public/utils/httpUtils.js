@@ -16,18 +16,26 @@ export const useGetRequest = url => {
         .catch(err => setError(err))   
     } , [url])
 
-    if (error){
-        return error.message
-    }
+    if (error) return error;
     
     return data
 }
 
 export const usePostRequest = url => {
     
-    const [state , setState] = useState()
+    const [data , setData] = useState()
+    const [error , setError] = useState()
 
     useEffect(() => {
-        
+        axios_client.post('/post' , {
+            title: "Hello World",
+            body:"Hello There"
+        })
+        .then(res => setData(res.data))
+        .catch(err => setError(err))
     }, [url])
+
+    if(error) return error
+
+    return data
 }

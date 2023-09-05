@@ -8,8 +8,7 @@ const allowed_origins = ['http://localhost:1234']
 //middleware
 const app = express()
 
-
-
+app.use(express.json())
 app.use(cors({
     origin:allowed_origins[0],
     optionsSuccessStatus:200
@@ -24,7 +23,7 @@ app.get("/message", (req, res) => {
 
 app.post('/post' , (req , res) => {
     console.log("hit the endpoint");
-    console.log(req.title);
+    console.log(req.body);
     res.json({ message: "hello from post endpoint"})
 })
 app.listen(port , console.log(`Server Listening at ${port}....`))
