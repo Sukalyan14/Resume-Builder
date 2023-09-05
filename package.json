@@ -4,10 +4,9 @@
   "description": "React Based Resume Builder",
   "main": "index.js",
   "scripts": {
-    "start" : "parcel ./public/index.html",
+    "start" : "parcel ./src/public/index.html",
     "dev" : "nodemon ./server/index.js"
   },
-  "proxy": "http://localhost:3000",
   "author": "Sukalyan",
   "license": "ISC",
   "dependencies": {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { keyframes, styled } from "styled-components";
-import Login from "./Login";
+import Login from "./Login.jsx";
 import '../style.css'
 import Register from "./Register";
 

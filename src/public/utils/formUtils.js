@@ -1,4 +1,4 @@
-import { EmailCheckRegex , UpperCaseCheckRegex , LowerCaseCheckRegex , SpecialCharacterCheckRegex , NumberCheckRegex } from "../constant"
+import { EmailCheckRegex , UpperCaseCheckRegex , LowerCaseCheckRegex , SpecialCharacterCheckRegex , NumberCheckRegex } from "../../constant"
 
 export const UPDATE_FORM = "UPDATE_FORM"
 
