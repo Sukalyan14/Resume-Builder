@@ -18,6 +18,7 @@ const Login_Register = () => {
         <>
             <div className="login_form">
                 <form onSubmit={handleSubmit}>
+                    <h2>Login</h2>
                     <label htmlFor="">
                         Username 
                         <input type="text" name="username" value={inputs.username || ""} onChange={handleChange}/> 
