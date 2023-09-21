@@ -4,15 +4,26 @@
   "description": "React Based Resume Builder",
   "main": "index.js",
   "scripts": {
-    "start": "parcel index.html"
+    "start" : "parcel ./src/public/index.html",
+    "dev" : "nodemon ./server/index.js"
   },
   "author": "Sukalyan",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.5.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "formik": "^2.4.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.10.1",
+    "react-router-dom": "^6.14.2",
+    "styled-components": "^6.0.4"
   },
   "devDependencies": {
+    "babel-plugin-styled-components": "^2.1.4",
+    "buffer": "^6.0.3",
+    "nodemon": "^3.0.1",
     "parcel": "^2.9.3",
     "process": "^0.11.10"
   }
