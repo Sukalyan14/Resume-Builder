@@ -1,15 +1,10 @@
-import { useState , useReducer, useEffect } from "react"
+import { useReducer, useState } from "react"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub , FaApple , FaFacebookF } from "react-icons/fa"
-import { UPDATE_FORM , onInputChange , onFocusOut , validateInput } from "../utils/formUtils";
-import '../style.css';
+import '../../public/style.css';
 import IconBox from "./IconBox";
 import Button from "./Button";
-import axios from "axios";
-
-const axios_client = axios.create({
-    baseURL:"http://localhost:3000/auth/register"
-})
+import { UPDATE_FORM , onFocusOut, onInputChange, validateInput } from "../utils/formUtils";
 
 function formReducer(state , action){
     switch (action.type){
@@ -25,17 +20,11 @@ function formReducer(state , action){
     }
 }
 
-const Register = (props) => {
-    
+const Login = (props) => {
+
     const [formState , dispatch] = useReducer(formReducer , {isFormValid:false})
-
+    
     const [showError , setShowError] = useState(false)
-
-    // useEffect(() => {
-    //     console.log("In use effect");
-    //     axios_client.get(`/message`)
-    //     .then(res => console.log(res.data))
-    // } , [])
 
     const handleSubmit = (event) =>{
         event.preventDefault()
@@ -45,7 +34,7 @@ const Register = (props) => {
         for (const name in formState){
             const item = formState[name]
             const { value } = item
-            const { hasError , error } = validateInput( name , value , formState )
+            const { hasError , error } = validateInput( name , value)
 
             if(hasError){
                 isFormValid = false
@@ -62,13 +51,7 @@ const Register = (props) => {
         if(!isFormValid) {
             setShowError(true)
         } else {
-            //submit form to backend
-            axios_client.post('/' , { 
-                email:formState.email.value , 
-                password : formState.password.value
-             })
-            .then(res => console.log(res.data))
-            .catch(error => console.log(error.data))
+            console.log(formState);
         }
 
         setTimeout(() => {
@@ -78,8 +61,8 @@ const Register = (props) => {
     
     return (
         <>
-            <form className="login-register-form" onSubmit={handleSubmit} >
-            
+            <form className="login-register-form" onSubmit={handleSubmit}>
+                            
                 <div className="form_control">
                     <input 
                         type="text" 
@@ -102,19 +85,10 @@ const Register = (props) => {
                         placeholder="Password" required />
                     <div className="error-message">{(formState.password && formState.password.touched && formState.password.hasError) ? formState.password.error : " "}</div>
                 </div>
-                                    
-                <div className="form_control">
-                    <input 
-                        type="password" 
-                        name="confirm_password" 
-                        value={formState.confirm_password ? formState.confirm_password.value : ""} 
-                        onChange={e => {onInputChange("confirm_password" , e.target.value , dispatch , formState)}} 
-                        onBlur={e => {onFocusOut("confirm_password" , e.target.value , dispatch , formState)}}
-                        placeholder="Confirm Password" required />
-                    <div className="error-message">{(formState.confirm_password && formState.confirm_password.touched && formState.confirm_password.hasError) ? formState.confirm_password.error : " "}</div>
-                </div>
+                            
+                <p className="forget_password">Forgot Password?</p>
 
-                <Button btn_text = "Sign Up"/>
+                <Button btn_text = "Sign In" />  {/* Can try a backdrop state based expression for button disappearenc */}
 
                 <p className="line_break">Or continue with</p>
                 
@@ -141,17 +115,15 @@ const Register = (props) => {
                 <p className="register-link">
                     Not a member? 
                     <span onClick = {() => {
-                        props.onFormSwitch('login')
+                        props.onFormSwitch('register')
                     }}>
-                        Log In
+                            Register Now
                     </span>
                 </p>
             </form>
-
-            
 
         </>
     )
 }
 
-export default Register
+export default Login

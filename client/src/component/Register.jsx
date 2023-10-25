@@ -1,11 +1,17 @@
-import { useReducer, useState } from "react"
+import { useState , useReducer, useEffect } from "react"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub , FaApple , FaFacebookF } from "react-icons/fa"
-import '../style.css';
+import { UPDATE_FORM , onInputChange , onFocusOut , validateInput } from "../utils/formUtils";
+import '../../public/style.css';
 import IconBox from "./IconBox";
 import Button from "./Button";
-import { UPDATE_FORM , onFocusOut, onInputChange, validateInput } from "../utils/formUtils";
+import axios from "axios";
 
+const axios_client = axios.create({
+    baseURL:"http://localhost:3000/auth/register"
+})
+console.log(1);
+// console.log(process.env.MESSAGE);
 function formReducer(state , action){
     switch (action.type){
         case UPDATE_FORM:
@@ -20,11 +26,17 @@ function formReducer(state , action){
     }
 }
 
-const Login = (props) => {
-
-    const [formState , dispatch] = useReducer(formReducer , {isFormValid:false})
+const Register = (props) => {
     
+    const [formState , dispatch] = useReducer(formReducer , {isFormValid:false})
+
     const [showError , setShowError] = useState(false)
+
+    // useEffect(() => {
+    //     console.log("In use effect");
+    //     axios_client.get(`/message`)
+    //     .then(res => console.log(res.data))
+    // } , [])
 
     const handleSubmit = (event) =>{
         event.preventDefault()
@@ -34,7 +46,7 @@ const Login = (props) => {
         for (const name in formState){
             const item = formState[name]
             const { value } = item
-            const { hasError , error } = validateInput( name , value)
+            const { hasError , error } = validateInput( name , value , formState )
 
             if(hasError){
                 isFormValid = false
@@ -51,7 +63,13 @@ const Login = (props) => {
         if(!isFormValid) {
             setShowError(true)
         } else {
-            console.log(formState);
+            //submit form to backend
+            axios_client.post('/' , { 
+                email:formState.email.value , 
+                password : formState.password.value
+             })
+            .then(res => console.log(res.data))
+            .catch(error => console.log(error.data))
         }
 
         setTimeout(() => {
@@ -61,8 +79,8 @@ const Login = (props) => {
     
     return (
         <>
-            <form className="login-register-form" onSubmit={handleSubmit}>
-                            
+            <form className="login-register-form" onSubmit={handleSubmit} >
+            
                 <div className="form_control">
                     <input 
                         type="text" 
@@ -85,10 +103,19 @@ const Login = (props) => {
                         placeholder="Password" required />
                     <div className="error-message">{(formState.password && formState.password.touched && formState.password.hasError) ? formState.password.error : " "}</div>
                 </div>
-                            
-                <p className="forget_password">Forgot Password?</p>
+                                    
+                <div className="form_control">
+                    <input 
+                        type="password" 
+                        name="confirm_password" 
+                        value={formState.confirm_password ? formState.confirm_password.value : ""} 
+                        onChange={e => {onInputChange("confirm_password" , e.target.value , dispatch , formState)}} 
+                        onBlur={e => {onFocusOut("confirm_password" , e.target.value , dispatch , formState)}}
+                        placeholder="Confirm Password" required />
+                    <div className="error-message">{(formState.confirm_password && formState.confirm_password.touched && formState.confirm_password.hasError) ? formState.confirm_password.error : " "}</div>
+                </div>
 
-                <Button btn_text = "Sign In" />  {/* Can try a backdrop state based expression for button disappearenc */}
+                <Button btn_text = "Sign Up"/>
 
                 <p className="line_break">Or continue with</p>
                 
@@ -115,15 +142,17 @@ const Login = (props) => {
                 <p className="register-link">
                     Not a member? 
                     <span onClick = {() => {
-                        props.onFormSwitch('register')
+                        props.onFormSwitch('login')
                     }}>
-                            Register Now
+                        Log In
                     </span>
                 </p>
             </form>
+
+            
 
         </>
     )
 }
 
-export default Login
+export default Register
