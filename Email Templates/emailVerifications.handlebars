@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+    <title>Mail Template Test</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,500;1,100&display=swap');
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500
+        }
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+        img{
+            max-width: calc(100% - 30px);
+            max-height: 600px;
+            /* aspect-ratio: 16/9; */
+        }
+
+        h2{
+            margin: 0.6rem 0 1rem 0;
+            font-style: italic;
+            letter-spacing: 1px;
+            font-weight: 600;
+            font-size: 3rem;
+            color:  #34495e ;
+        }
+
+        h4{
+            margin: 0.4rem 0;
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        p{
+            margin: 0.6rem;
+            font-size: 12px;
+        }
+        .container{
+            padding-top: 0.5rem;
+            /* background-color: #E0E2E6; */
+            /* max-width: 300px; */
+            min-width: 300px;
+            /* margin: 0.4em; */
+            /* border-radius: 8px; */
+            text-align: center;
+        }
+
+        .btn{
+            margin-top: 0.5rem;
+            padding: 10px 15px;
+            border-radius: 6px;
+            background-color:  #34495e ;
+            border: 1px solid #f5f5f5;
+            color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <h2>MailS</h2>
+        <img src="{{ logoUrl }}" alt="alt.logo">
+        <h4>Hello There!</h4>
+        <p>Thanks for Checking , this mail is a test for email verification via backend</p>
+        <a href="{{ verificationLink }}">
+            <button class="btn">Verify Email</button>
+        </a>    
+        <p>Button not working? Try pasting this link in to your browser:<a href="{{ verificationLink }}">{{ verificationLink }}</a></p>
+        
+    </div>
+    <!-- <p>If above button is not working then copy this Link in  </p> -->
+</body>
+</html>

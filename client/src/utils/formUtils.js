@@ -1,52 +1,6 @@
-import { EmailCheckRegex , UpperCaseCheckRegex , LowerCaseCheckRegex , SpecialCharacterCheckRegex , NumberCheckRegex } from "../../constant"
+import { EmailCheckRegex , UpperCaseCheckRegex , LowerCaseCheckRegex , SpecialCharacterCheckRegex , NumberCheckRegex } from "../constant"
 
 export const UPDATE_FORM = "UPDATE_FORM"
-
-export const onInputChange = (name , value , dispatch , formState) => {
-    
-    const { hasError, error } = validateInput(name, value , formState)
-    let isFormValid = true
-  
-    for (const key in formState) {
-      const item = formState[key]
-  
-      if (key === name && hasError) {   // Check if the current field has error
-        isFormValid = false
-        break
-      } else if (key !== name && item.hasError) {  // Check if any other field has error
-        isFormValid = false
-        break
-      }
-  
-    }
-  
-    dispatch({
-      type: UPDATE_FORM,
-      data: { name, value, hasError, error, touched: false, isFormValid },
-    })
-}
-
-export const onFocusOut = (name , value , dispatch , formState) => {
-    
-    const { hasError , error } = validateInput(name , value , formState)
-    let isFormValid = true
-    
-    for ( const key in formState){
-        const item = formState[key]
-        if(key === name && hasError){
-            isFormValid = false
-            break
-        } else if(key !== name && item.hasError){
-            isFormValid = false
-            break
-        }
-    }
-
-    dispatch({
-        type: UPDATE_FORM , 
-        data:{ name , value , hasError , error , touched:true , isFormValid }
-    })
-}
 
 export const validateInput = (name , value , formState) => {
     let hasError = false ,
@@ -106,4 +60,50 @@ export const validateInput = (name , value , formState) => {
     }
 
     return { hasError , error }
+}
+
+export const onInputChange = (name , value , dispatch , formState) => {
+    // console.log(formState);
+    const { hasError, error } = validateInput(name, value , formState)
+    let isFormValid = true
+  
+    for (const key in formState) {
+      const item = formState[key]
+  
+      if (key === name && hasError) {   // Check if the current field has error
+        isFormValid = false
+        break
+      } else if (key !== name && item.hasError) {  // Check if any other field has error
+        isFormValid = false
+        break
+      }
+  
+    }
+  
+    dispatch({
+      type: UPDATE_FORM,
+      data: { name, value, hasError, error, touched: false, isFormValid },
+    })
+}
+
+export const onFocusOut = (name , value , dispatch , formState) => {
+    
+    const { hasError , error } = validateInput(name , value , formState)
+    let isFormValid = true
+    
+    for ( const key in formState){
+        const item = formState[key]
+        if(key === name && hasError){
+            isFormValid = false
+            break
+        } else if(key !== name && item.hasError){
+            isFormValid = false
+            break
+        }
+    }
+
+    dispatch({
+        type: UPDATE_FORM , 
+        data:{ name , value , hasError , error , touched:true , isFormValid }
+    })
 }

@@ -1,5 +1,5 @@
 import { styled } from "styled-components"
-import Bg  from '../assets/pngegg.png'
+import Bg  from '../../assets/pngegg.png'
 import LoginFormWrapper from "./LoginFormWrapper"
 
 const Container = styled.div`

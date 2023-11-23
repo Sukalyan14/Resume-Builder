@@ -1,30 +1,28 @@
 {
   "name": "resume-builder",
   "version": "1.0.0",
-  "description": "React Based Resume Builder",
-  "main": "index.js",
+  "description": "",
+  "main": "server.js",
   "scripts": {
-    "start" : "parcel ./src/public/index.html",
-    "dev" : "nodemon ./server/index.js"
+    "client": "cd client && npm run start",
+    "server": "nodemon server.js",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
+  "keywords": [],
   "author": "Sukalyan",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.5.0",
     "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^16.3.1",
+    "dotenv-expand": "^10.0.0",
     "express": "^4.18.2",
-    "formik": "^2.4.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.10.1",
-    "react-router-dom": "^6.14.2",
-    "styled-components": "^6.0.4"
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.9.7",
+    "nodemailer-express-handlebars": "^6.1.0"
   },
   "devDependencies": {
-    "babel-plugin-styled-components": "^2.1.4",
-    "buffer": "^6.0.3",
-    "nodemon": "^3.0.1",
-    "parcel": "^2.9.3",
-    "process": "^0.11.10"
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.1"
   }
 }

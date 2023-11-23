@@ -1,9 +1,9 @@
 import { useReducer, useState } from "react"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub , FaApple , FaFacebookF } from "react-icons/fa"
-import '../style.css';
-import IconBox from "./IconBox";
-import Button from "./Button";
+import '../../public/style.css';
+import IconBox from "./style component/IconBox";
+import Button from "./style component/Button";
 import { UPDATE_FORM , onFocusOut, onInputChange, validateInput } from "../utils/formUtils";
 
 function formReducer(state , action){

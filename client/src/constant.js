@@ -7,3 +7,5 @@ export const UpperCaseCheckRegex = /[A-Z]/g;
 export const LowerCaseCheckRegex = /[a-z]/g;
 
 export const NumberCheckRegex = /[0-9]/g
+
+// export const baseURL = 'http://localhost:5000'
