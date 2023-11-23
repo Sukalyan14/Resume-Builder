@@ -3,15 +3,17 @@ import { FcGoogle } from "react-icons/fc"
 import { FaGithub , FaApple , FaFacebookF } from "react-icons/fa"
 import { UPDATE_FORM , onInputChange , onFocusOut , validateInput } from "../utils/formUtils";
 import '../../public/style.css';
-import IconBox from "./IconBox";
-import Button from "./Button";
+import IconBox from "./style component/IconBox";
+import Button from "./style component/Button";
 import axios from "axios";
 
+
+console.log(process.env.SERVER_URL , process.env.SERVER_PORT);
 const axios_client = axios.create({
-    baseURL:"http://localhost:3000/auth/register"
+    baseURL:`${process.env.SERVER_URL}${process.env.SERVER_PORT}/auth/register`
 })
-console.log(1);
-// console.log(process.env.MESSAGE);
+
+// http://localhost:5000/auth/register
 function formReducer(state , action){
     switch (action.type){
         case UPDATE_FORM:

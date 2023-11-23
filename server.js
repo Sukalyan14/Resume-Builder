@@ -2,9 +2,9 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan')
+require('dotenv-expand').expand(require('dotenv').config())
 
 const router = require('./routes/route.js');
-require('dotenv').config();
 
 const allowed_origins = ['http://localhost:1234'];
 const port = process.env.PORT || 3300;
@@ -16,13 +16,14 @@ app.use(express.json());
 
 app.use(morgan('tiny'))
 
-app.use(cors({
-  origin: allowed_origins[0],
-  optionsSuccessStatus: 200
-}));
 
-console.log(process.env.PORT);
-// console.log(console.log(require("dotenv").config()));
+// app.use(cors({
+//   origin: allowed_origins[0],
+//   optionsSuccessStatus: 200
+// }));
+
+app.use(cors());
+
 // Register the routes with appropriate paths
 app.use('/auth/register', router);
 app.use('/message', router);

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { keyframes, styled } from "styled-components";
-import Login from "./Login.jsx";
-import '../../public/style.css';
-import Register from "./Register";
+import Login from "../Login.jsx";
+import '../../../public/style.css';
+import Register from "../Register.jsx";
 
 const Backdrop_animation = keyframes`
     0%{

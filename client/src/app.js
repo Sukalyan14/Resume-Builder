@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import ReactDOM  from "react-dom/client";
-import Wrapper from "./component/Wrapper";
-import axios from "axios";
+import Wrapper from "./component/style component/Wrapper";
 
 const AppLayout = () => {
 

@@ -63,7 +63,7 @@ export const validateInput = (name , value , formState) => {
 }
 
 export const onInputChange = (name , value , dispatch , formState) => {
-    console.log(formState);
+    // console.log(formState);
     const { hasError, error } = validateInput(name, value , formState)
     let isFormValid = true
   
