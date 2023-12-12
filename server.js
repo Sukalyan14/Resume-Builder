@@ -6,6 +6,9 @@ require('dotenv-expand').expand(require('dotenv').config())
 
 const router = require('./routes/route.js');
 
+//Loads the handlebars module
+// const handlebars = require('express-handlebars');
+
 const allowed_origins = ['http://localhost:1234'];
 const port = process.env.PORT || 3300;
 
@@ -14,8 +17,18 @@ const app = express();
 
 app.use(express.json());
 
-app.use(morgan('tiny'))
+app.use(morgan('tiny'));
 
+// For Images in other statics
+app.use(express.static('client/public'));
+
+//Sets our app to use the handlebars engine
+// app.set('view engine', 'handlebars');
+
+// //Sets handlebars configurations (we will go through them later on)
+// app.engine('handlebars', handlebars({
+//     layoutsDir: __dirname + '/views/layouts',
+// }));
 
 // app.use(cors({
 //   origin: allowed_origins[0],
