@@ -34,11 +34,12 @@ const register = async (req , res) => {
 
 async function sendVerificationEmail(emailId){
     try{
-        console.log(process.env.LOGO_URL);
         let current_date = (new Date()).valueOf().toString();
         let random = Math.random().toString();
         let hashedValue = crypto.createHash('MD5').update(current_date + random).digest('hex');
-        let verificationLink = process.env.verifyEndPointUrl+"?key="+hashedValue;  //Store in db for a specific session
+        let verificationLink = process.env.VERIFY_END_POINT_URL+"?key="+hashedValue;  //Store in db for a specific session
+
+        // console.log(process.env.VERIFY_END_POINT_URL , process.env.LOGO_URL);
 
         let config = {
             service : process.env.MAIL_SERVICE_NAME,
