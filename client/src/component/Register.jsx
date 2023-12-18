@@ -1,4 +1,4 @@
-import { useState , useReducer, useEffect } from "react"
+import { useState , useReducer } from "react"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub , FaApple , FaFacebookF } from "react-icons/fa"
 import { UPDATE_FORM , onInputChange , onFocusOut , validateInput } from "../utils/formUtils";
@@ -33,12 +33,6 @@ const Register = (props) => {
     const [formState , dispatch] = useReducer(formReducer , {isFormValid:false})
 
     const [showError , setShowError] = useState(false)
-
-    // useEffect(() => {
-    //     console.log("In use effect");
-    //     axios_client.get(`/message`)
-    //     .then(res => console.log(res.data))
-    // } , [])
 
     const handleSubmit = (event) =>{
         event.preventDefault()

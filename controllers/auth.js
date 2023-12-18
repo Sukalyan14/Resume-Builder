@@ -1,21 +1,19 @@
 const nodemailer = require('nodemailer')
-const crypto = require('crypto')
+const crypto = require('node:crypto')
 const hbs = require('nodemailer-express-handlebars');
-const path = require('path');
+const bcrypt = require('bcrypt')
+const inlineBase64 = require('nodemailer-plugin-inline-base64');
+
+const RegisterCheckCluster0 = require('../models/register_verify')
+
 //will need async await when connected and fetching from db
-
-const dummy = (req, res) => {
-    // console.log("hit the  endpoint");
-    res.json({ message: "Hello from server!" });
-}
-
 
 const register = async (req , res) => {
     // let emailId = req.body.email
     // console.log(emailId);
     
     try{
-        await sendVerificationEmail(req.body.email)
+        await sendVerificationEmail(req.body.email , req.body.password)
 
         res.status(201).json({
             status: 'Success',
@@ -32,14 +30,26 @@ const register = async (req , res) => {
     // return true
 }
 
-async function sendVerificationEmail(emailId){
+async function sendVerificationEmail(emailId , password){
     try{
+        const saltRounds = 10
+    
         let current_date = (new Date()).valueOf().toString();
         let random = Math.random().toString();
-        let hashedValue = crypto.createHash('MD5').update(current_date + random).digest('hex');
-        let verificationLink = process.env.VERIFY_END_POINT_URL+"?key="+hashedValue;  //Store in db for a specific session
+        let token = crypto.createHash('MD5').update(current_date + random).digest('hex');
 
-        // console.log(process.env.VERIFY_END_POINT_URL , process.env.LOGO_URL);
+        // bcrypt.hash(password , saltRounds , async function(err , hash) {
+
+        //     const register_data = await RegisterCheckCluster0.create({
+        //         email : emailId ,
+        //         session_token : token ,
+        //         password : hash , 
+        //         verified : false
+        //     })
+        //     console.log(register_data);
+        // })
+        
+        let verificationLink = process.env.VERIFY_END_POINT_URL+"?key="+token;  //Store in db for a specific user-session
 
         let config = {
             service : process.env.MAIL_SERVICE_NAME,
@@ -83,72 +93,5 @@ async function sendVerificationEmail(emailId){
     
 }
 
+module.exports = { register }
 
-module.exports = { dummy , register }
-
-//Dump
-// transporter.use('compile' , hbs({
-//     viewEngine: {
-//         extname: '.handlebars',
-//         // partialsDir: './emailTemplates',
-//         partialsDir: path.resolve(__dirname , "emailVerifications"),
-//         // layoutsDir: './emailTemplates/',
-//         defaultLayout: 'emailVerifications'
-//     },
-//     // viewPath: './emailTemplates/',
-//     viewPath: path.resolve(__dirname , "emailVerifications"),
-//     extName: '.handlebars'
-// }))
-
-// let info = await transporter.sendMail({
-//     from: 'arthurdesanta39@gmail.com',
-//     to: emailId,
-//     subject: 'Email Verification',
-//     template: 'emailVerifications',
-//     context: {
-//         logoUrl: process.env.LOGO_URL,
-//         verificationLink: verificationLink
-//     }
-// })
-
-// await sendVerificationEmail(req.body.email)
-// .then((info) => {
-//     console.log(info);
-//     res.status(201).json(
-//         {
-//             msg:'Email Sent',
-//             info: "Verification Email Sent",
-//             // preview: nodemailer.getTestMessageUrl(info)
-//         })
-// })
-// .catch((err) => {
-//     console.log('error' , "line 72");
-//     res.status(500).json( { msg: err } )
-// })
-
-    // res.status(201).json(
-    //     {
-    //         msg:'Email Sent',
-    //         info: "Verification Email Sent",
-    //         // preview: nodemailer.getTestMessageUrl(info)
-    //     })
-    // // tewiba1102@soebing.com
-    // let message = {
-    //     from:'thanatos5614@gmail.com',
-    //     to: req.body.email,
-    //     subject: 'Welcome To My World',
-    //     html:`<b>Hello There</b>`
-    // }
-
-    // transporter.sendMail(message)
-    //     .then((info) => {
-    //         return res.status(201).json(
-    //             {
-    //                 msg:'Email Sent',
-    //                 info: info.messageId,
-    //                 preview: nodemailer.getTestMessageUrl(info)
-    //             }
-    //         )} //for .then
-    //     ).catch((error) => {
-    //     return res.status(500).json( { msg: error } )
-    // })

@@ -5,6 +5,7 @@ const morgan = require('morgan')
 require('dotenv-expand').expand(require('dotenv').config())
 
 const router = require('./routes/route.js');
+const connectDb = require('./db/connect.js')
 
 //Loads the handlebars module
 // const handlebars = require('express-handlebars');
@@ -21,6 +22,7 @@ app.use(morgan('tiny'));
 
 // For Images in other statics
 app.use(express.static('client/public'));
+
 
 //Sets our app to use the handlebars engine
 // app.set('view engine', 'handlebars');
@@ -39,8 +41,18 @@ app.use(cors());
 
 // Register the routes with appropriate paths
 app.use('/auth/register', router);
-app.use('/message', router);
 
-app.listen(port, () => console.log(`Server Listening at ${port}....`));
+
+const start = async () => {
+    try{
+        await connectDb(process.env.MONGO_CONNECT_STRING)
+        app.listen(port, () => console.log(`Db Connected && Server Listening at ${port}....`));
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+start()
 
 // MONGO_PASSWORD=YxeBg8i5JYFaSZnG

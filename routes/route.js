@@ -9,8 +9,6 @@ const { dummy , register } = require('../controllers/auth')
     
 // };
 
-router.route('/').get(dummy)
-
 router.route('/').post(register)
 
 module.exports = router

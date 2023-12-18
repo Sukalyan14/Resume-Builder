@@ -12,10 +12,14 @@ MAIL_SERVICE_SECURE=false # Service security
 MAIL_SERVICE_PORT=587 # service port
 MAIL_USER_NAME=thanatos5614@gmail.com # email address
 MAIL_USER_PASSWORD=ujoh rbpp vujh tnvn  # email address password
-# REACT_APP_API_AUTH="Hello THERE${PORT}"
 
 ADMIN_MAIL=arthurdesanta39@gmail.com
 VERIFY_END_POINT_URL="${BASE_URL}${PORT}/auth/verifyEmail"
 
 ## IMAGE URL
 LOGO_URL="${BASE_URL}${PORT}/app_logo.png"
+
+## DB
+MONGO_PASSWORD=YxeBg8i5JYFaSZnG 
+
+MONGO_CONNECT_STRING="mongodb+srv://thanatos5614:${MONGO_PASSWORD}@cluster0.oatk9zp.mongodb.net/"
