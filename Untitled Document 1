@@ -11,13 +11,15 @@ MAIL_SERVICE_NAME=gmail# service name
 MAIL_SERVICE_SECURE=false # Service security
 MAIL_SERVICE_PORT=587 # service port
 MAIL_USER_NAME=thanatos5614@gmail.com # email address
-MAIL_USER_PASSWORD=ujoh rbpp vujh tnvn  # email address password
+MAIL_USER_PASSWORD=bjmw izfl vuoh ecol # email address password
 
 ADMIN_MAIL=arthurdesanta39@gmail.com
 VERIFY_END_POINT_URL="${BASE_URL}${PORT}/auth/verifyEmail"
 
 ## IMAGE URL
-LOGO_URL="${BASE_URL}${PORT}/app_logo.png"
+# LOGO_URL="${BASE_URL}${PORT}/app_logo.png"
+LOGO_URL=https://drive.google.com/file/d/1zGOpPe1TmE6oYFXKX2sjxDG8t_Bck2sK/view?usp=sharing
+
 
 ## DB
 MONGO_PASSWORD=YxeBg8i5JYFaSZnG 

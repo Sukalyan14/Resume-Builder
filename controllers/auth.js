@@ -1,8 +1,8 @@
 const nodemailer = require('nodemailer')
 const crypto = require('node:crypto')
 const hbs = require('nodemailer-express-handlebars');
-const bcrypt = require('bcrypt')
-const inlineBase64 = require('nodemailer-plugin-inline-base64');
+const bcrypt = require('bcryptjs')
+// const inlineBase64 = require('nodemailer-plugin-inline-base64');
 
 const RegisterCheckCluster0 = require('../models/register_verify')
 
@@ -37,9 +37,8 @@ async function sendVerificationEmail(emailId , password){
         let current_date = (new Date()).valueOf().toString();
         let random = Math.random().toString();
         let token = crypto.createHash('MD5').update(current_date + random).digest('hex');
-
-        // bcrypt.hash(password , saltRounds , async function(err , hash) {
-
+        
+        bcrypt.hash(password , saltRounds , async function(err , hash) {
         //     const register_data = await RegisterCheckCluster0.create({
         //         email : emailId ,
         //         session_token : token ,
@@ -47,7 +46,7 @@ async function sendVerificationEmail(emailId , password){
         //         verified : false
         //     })
         //     console.log(register_data);
-        // })
+        })
         
         let verificationLink = process.env.VERIFY_END_POINT_URL+"?key="+token;  //Store in db for a specific user-session
 
