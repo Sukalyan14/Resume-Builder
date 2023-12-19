@@ -4,7 +4,7 @@ const cors = require('cors');
 const morgan = require('morgan')
 require('dotenv-expand').expand(require('dotenv').config())
 
-const router = require('./routes/route.js');
+const router = require('./routes/auth_route.js');
 const connectDb = require('./db/connect.js')
 
 //Loads the handlebars module
@@ -40,8 +40,8 @@ app.use(express.static('client/public'));
 app.use(cors());
 
 // Register the routes with appropriate paths
-app.use('/auth/register', router);
-
+app.use('/auth', router);
+// app.use('/auth/verify-email' , router)
 
 const start = async () => {
     try{
@@ -54,5 +54,3 @@ const start = async () => {
 }
 
 start()
-
-// MONGO_PASSWORD=YxeBg8i5JYFaSZnG

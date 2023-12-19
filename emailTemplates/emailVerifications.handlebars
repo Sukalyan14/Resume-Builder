@@ -19,7 +19,6 @@
         img{
             max-width: calc(100% - 30px);
             max-height: 400px;
-            /*aspect-ratio: 16/9*/; 
         }
 
         h2{
@@ -43,26 +42,12 @@
         }
         .container{
             padding-top: 0.5rem;
-            /*display: flex;
-            flex-direction: column;
-            align-items: center;*/
             min-width: 300px;
-            /* margin: 0.4em; */
-            /* border-radius: 8px; */
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        /*image{
-            height: 24px;
-            width: 24px; 
-            max-width: calc(100% - 30px);
-            max-height: 600px;
-            display: block;
-
-            background-size: contain;
-            /*background-color: #34495e;
-            background: url("https://drive.google.com/file/d/1zGOpPe1TmE6oYFXKX2sjxDG8t_Bck2sK/view?usp=sharing");
-            /* aspect-ratio: 16/9; 
-        }*/
         .btn{
             margin-top: 0.5rem;
             padding: 10px 15px;
@@ -77,8 +62,9 @@
     <div class="container">
         
         <h2>MailS</h2>
-        <img src="{{ logoUrl }}" alt="alt.logo" title="Logo" style="display: block; max-width:400px; border-style:none;" width="400px" height="auto" >  
-        {{!-- <img src="https://raw.githubusercontent.com/Sukalyan14/Resume-Builder/fc98faf46a30558a371aa00be05954167d240046/client/public/app_logo.png" alt="alt.logo" title="Logo" style="display: block;"> --}}
+        {{!-- <img src="{{ logoUrl }}" alt="alt.logo" title="Logo" >   --}}
+        <img src="https://uploads-ssl.webflow.com/65813403a9915a2548381d1c/6581344b05e429fc356fa04e_app_logo.png" alt="alt.logo" title="Logo" >  
+        {{!-- style="display: block; max-width:400px; border-style:none;"width="400px" height="auto" --}}
         
         {{!-- <div class="image"></div> --}}
         <h4>Hello There!</h4>
@@ -89,6 +75,6 @@
         <p>Button not working? Try pasting this link in to your browser:<a href="{{ verificationLink }}">{{ verificationLink }}</a></p>
         
     </div>
-    <!-- <p>If above button is not working then copy this Link in  </p> -->
+
 </body>
 </html>
