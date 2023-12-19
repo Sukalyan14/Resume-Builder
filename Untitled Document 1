@@ -17,8 +17,8 @@ ADMIN_MAIL=arthurdesanta39@gmail.com
 VERIFY_END_POINT_URL="${BASE_URL}${PORT}/auth/verifyEmail"
 
 ## IMAGE URL
-# LOGO_URL="${BASE_URL}${PORT}/app_logo.png"
-LOGO_URL=https://drive.google.com/file/d/1zGOpPe1TmE6oYFXKX2sjxDG8t_Bck2sK/view?usp=sharing
+## LOGO_URL="${BASE_URL}${PORT}/app_logo.png"
+LOGO_URL=https://uploads-ssl.webflow.com/65813403a9915a2548381d1c/6581344b05e429fc356fa04e_app_logo.png
 
 
 ## DB

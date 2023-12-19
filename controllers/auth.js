@@ -38,7 +38,7 @@ async function sendVerificationEmail(emailId , password){
         let random = Math.random().toString();
         let token = crypto.createHash('MD5').update(current_date + random).digest('hex');
         
-        bcrypt.hash(password , saltRounds , async function(err , hash) {
+        // bcrypt.hash(password , saltRounds , async function(err , hash) {
         //     const register_data = await RegisterCheckCluster0.create({
         //         email : emailId ,
         //         session_token : token ,
@@ -46,7 +46,7 @@ async function sendVerificationEmail(emailId , password){
         //         verified : false
         //     })
         //     console.log(register_data);
-        })
+        // })
         
         let verificationLink = process.env.VERIFY_END_POINT_URL+"?key="+token;  //Store in db for a specific user-session
 
