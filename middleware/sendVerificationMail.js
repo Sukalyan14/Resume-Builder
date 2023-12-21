@@ -3,26 +3,33 @@ const crypto = require('node:crypto')
 const hbs = require('nodemailer-express-handlebars');
 const bcrypt = require('bcryptjs')
 
-const RegisterCheckCluster0 = require('../models/register_verify')
+const RegisterCheckCluster0 = require('../models/register_verify');
+const { log } = require('node:console');
 
 //check if email already exists in db or is within the time range of prev token
 async function sendVerificationEmail(emailId , password){
     try{
         // console.log("hello");
         const saltRounds = 10
-        const date = new Date();
-        const time = `${date.getHours()}:${date.getMinutes()}`
+        const d = new Date();
+        const time = `${d.getHours()}:${d.getMinutes()}`
 
+        RegisterCheckCluster0.find({
+            email:emailId
+        }).then(result => {
+            let { date , time_stamp } = result[0]
+            const d2 = new Date(date)
+            console.log(time_stamp);
+        })
         // let mail_register_check = await RegisterCheckCluster0.find({
         //     email: emailId,
-        //     // verified:true
+        //     verified:true
         // })
         let mail_register_check = []
         // console.log(mail_register_check);
         
         //Checking if mail is already registered or not
         if (mail_register_check.length === 0){
-            time_stamp = mail_register_check.time_stamp
             
             const current_date = (new Date()).valueOf().toString();
             let random = Math.random().toString();
