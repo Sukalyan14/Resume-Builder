@@ -5,6 +5,8 @@ const register_verify_schema = new mongoose.Schema({
     // key:String ,
     session_token:String , 
     password:String , 
+    date:Date,
+    time_stamp:String , 
     verified:Boolean
 })
 

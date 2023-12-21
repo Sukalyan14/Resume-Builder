@@ -1,80 +1,75 @@
 <html lang="en">
-<head>
-    <title>Mail Template Test</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,500;1,100&display=swap');
-        *{
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-            font-weight: 500
-        }
-        body{
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-        }
-        
-        img{
-            max-width: calc(100% - 30px);
-            max-height: 400px;
-        }
+    <head>
+        <title>Mail Template Test</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,500;1,100&display=swap');
+            *{
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                font-family: 'Roboto', sans-serif;
+                font-weight: 500
+            }
+            body{
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+            }
+            
+            img{
+                /*max-width: calc(100% - 100px);*/
+                max-width: 66%;
+                height: auto;
+            }
+            h2{
+                margin: 0.6rem 0;
+                font-style: italic;
+                letter-spacing: 1px;
+                font-weight: 600;
+                font-size: 1.9rem;
+                color:  #34495e ;
+            }
 
-        h2{
-            margin: 0.6rem 0 1rem 0;
-            font-style: italic;
-            letter-spacing: 1px;
-            font-weight: 600;
-            font-size: 3rem;
-            color:  #34495e ;
-        }
+            h4{
+                margin: 0.6rem 0;
+                font-size: 1.3rem;
+                font-weight: 300;
+            }
+            p{
+                margin: 0.5rem;
+                font-size: 0.6rem;
+            }
+            .container{
+                /*margin: auto;*/
+                padding-top: 0.5rem;
+                text-align: center;
+            }
+            .btn{
+                padding: 0.4rem 1.2rem;
+                border-radius: 6px;
+                font-size: 0.8rem;
+                background-color:  #34495e ;
+                border: 1px solid #f5f5f5;
+                color: #f5f5f5;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            
+            <h2>MailS</h2>
+            
+            <img src="https://uploads-ssl.webflow.com/65813403a9915a2548381d1c/6581344b05e429fc356fa04e_app_logo.png" alt="alt.logo" title="Logo" >  
+            
+            
+            <h4>Hello There!</h4>
+            <p>Thanks for Checking , this mail is a test for email verification via backend</p>
+            <a href="{{ verificationLink }}">
+                <button class="btn">Verify Email</button>
+            </a>    
+            <p>Button not working? Try pasting this link in to your browser:<a href="{{ verificationLink }}">{{ verificationLink }}</a></p>
+            
+        </div>
 
-        h4{
-            margin: 0.4rem 0;
-            font-size: 2rem;
-            font-weight: 300;
-        }
-
-        p{
-            margin: 0.6rem;
-            font-size: 12px;
-        }
-        .container{
-            padding-top: 0.5rem;
-            min-width: 300px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .btn{
-            margin-top: 0.5rem;
-            padding: 10px 15px;
-            border-radius: 6px;
-            background-color:  #34495e ;
-            border: 1px solid #f5f5f5;
-            color: #f5f5f5;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        
-        <h2>MailS</h2>
-        {{!-- <img src="{{ logoUrl }}" alt="alt.logo" title="Logo" >   --}}
-        <img src="https://uploads-ssl.webflow.com/65813403a9915a2548381d1c/6581344b05e429fc356fa04e_app_logo.png" alt="alt.logo" title="Logo" >  
-        {{!-- style="display: block; max-width:400px; border-style:none;"width="400px" height="auto" --}}
-        
-        {{!-- <div class="image"></div> --}}
-        <h4>Hello There!</h4>
-        <p>Thanks for Checking , this mail is a test for email verification via backend</p>
-        <a href="{{ verificationLink }}">
-            <button class="btn">Verify Email</button>
-        </a>    
-        <p>Button not working? Try pasting this link in to your browser:<a href="{{ verificationLink }}">{{ verificationLink }}</a></p>
-        
-    </div>
-
-</body>
+    </body>
 </html>

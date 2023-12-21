@@ -35,13 +35,15 @@ const ButtonStyled = styled.button`
         z-index: -2;
     }
 
-    &:hover , &:focus{
+    &:hover ,
+    &:focus-visible {
         color: #fff;
         cursor: pointer;
         filter: brightness(1.15);
     }
 
-    &:hover::before , &:focus::before{
+    &:hover::before ,
+    &:focus-visible::before{
         transition: 0.5s all ease;
         left: 0;
         right: 0;
@@ -50,6 +52,8 @@ const ButtonStyled = styled.button`
 
     &:active{
         transform: scale(0.9);
+        transition: transform 0.2s ease;
+        outline: none;
     }
 `
 const Button = (props) => {
