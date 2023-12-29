@@ -4,10 +4,9 @@ const hbs = require('nodemailer-express-handlebars');
 const bcrypt = require('bcryptjs')
 
 const RegisterCheckCluster0 = require('../models/register_verify');
-const { log } = require('node:console');
 
 //check if email already exists in db or is within the time range of prev token
-async function sendVerificationEmail(emailId , password){
+async function sendVerificationEmail(emailId , password , duration){
     try{
         // console.log("hello");
         const saltRounds = 10
@@ -17,10 +16,20 @@ async function sendVerificationEmail(emailId , password){
         RegisterCheckCluster0.find({
             email:emailId
         }).then(result => {
-            let { date , time_stamp } = result[0]
-            const d2 = new Date(date)
-            console.log(time_stamp);
+            if(result){
+                let { date , time_stamp } = result[0]
+                
+                // const date2 = date.toLocaleDateString()
+                const datetime_current = new Date().toLocaleDateString();
+                const current_time =  new Date().toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric"});
+                if(datetime_current === date.toLocaleDateString()){
+                    console.log("same dates");
+                    console.log(current_time , time_stamp);
+                }
+                // console.log(d2 , date2 , time_stamp   , current_time);
+            }
         })
+
         // let mail_register_check = await RegisterCheckCluster0.find({
         //     email: emailId,
         //     verified:true
@@ -61,7 +70,8 @@ async function sendVerificationEmail(emailId , password){
             }
     
             nodemailerTransporter.use('compile' , hbs(options))
-    
+            
+            // Need to put proper checks that db entry is successful and mail is also sendt , a scenario where 1 happens and other fails is to be prevented
             const info = await nodemailerTransporter.sendMail({
                 from: process.env.ADMIN_MAIL,
                 to:emailId,
@@ -72,14 +82,14 @@ async function sendVerificationEmail(emailId , password){
                     verificationLink: verificationLink ,
                 }
             });
-            // console.log(info , "info");
+            
             if (info.accepted.length > 0){
                 // bcrypt.hash(password , saltRounds , async function(err , hash) {
                 //     const register_data = await RegisterCheckCluster0.create({
                 //         email : emailId ,
                 //         session_token : token ,
                 //         password : hash , 
-                //         date:date,
+                //         date:d,
                 //         time_stamp : time ,
                 //         verified : false
                 //     })

@@ -7,7 +7,7 @@ const duration = 20
 
 const register = async (req , res) => {
     
-    send_mail.sendVerificationEmail(req.body.email , req.body.password)
+    send_mail.sendVerificationEmail(req.body.email , req.body.password , duration)
     .then(result => {
             // console.log(result , "result");
             if (result && result.error){
