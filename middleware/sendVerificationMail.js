@@ -4,14 +4,16 @@ const hbs = require('nodemailer-express-handlebars');
 const bcrypt = require('bcryptjs')
 
 const RegisterCheckCluster0 = require('../models/register_verify');
+const { log } = require('node:console');
 
 //check if email already exists in db or is within the time range of prev token
 async function sendVerificationEmail(emailId , password , duration){
     try{
         // console.log("hello");
         const saltRounds = 10
-        const d = new Date();
-        const time = `${d.getHours()}:${d.getMinutes()}`
+        const datetime_current = new Date();
+        // const time = `${d.getHours()}:${d.getMinutes()}`
+        const time = datetime_current.toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric"})
 
         RegisterCheckCluster0.find({
             email:emailId
@@ -19,12 +21,17 @@ async function sendVerificationEmail(emailId , password , duration){
             if(result){
                 let { date , time_stamp } = result[0]
                 
-                // const date2 = date.toLocaleDateString()
-                const datetime_current = new Date().toLocaleDateString();
+                const datetime_current = new Date()
+                // console.log(date.getHours() , date.getMinutes() , time_stamp);
+                // console.log(datetime_current.getHours() , datetime_current.getMinutes());
+                // console.log((datetime_current - date)/(1000*60));
+                // const datetime_current = new Date().toLocaleDateString();
                 const current_time =  new Date().toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric"});
-                if(datetime_current === date.toLocaleDateString()){
+                if(datetime_current === date){
                     console.log("same dates");
                     console.log(current_time , time_stamp);
+                    let diff = current_time.split(':').map((item , index) => item - time_stamp.split(':')[index] )
+                    // console.log(diff);
                 }
                 // console.log(d2 , date2 , time_stamp   , current_time);
             }
@@ -89,7 +96,7 @@ async function sendVerificationEmail(emailId , password , duration){
                 //         email : emailId ,
                 //         session_token : token ,
                 //         password : hash , 
-                //         date:d,
+                //         date:datetime_current,
                 //         time_stamp : time ,
                 //         verified : false
                 //     })
