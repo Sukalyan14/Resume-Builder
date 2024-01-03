@@ -83,7 +83,7 @@ async function sendVerificationEmail(emailId , password , duration){
         }
         //If mail exists
         else if(mail_register_check && mail_register_check.length !== 0 && mail_register_check[0].verified === false){
-            console.log(duration);
+            
             // If greater than duration generate token & update timings
             if ((datetime_current - mail_register_check[0].date)/(1000*60) >= duration){
                 // console.log((datetime_current - mail_register_check[0].date)/(1000*60) , duration);

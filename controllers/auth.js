@@ -42,9 +42,23 @@ const verifyEmail = async (req , res) => {
         session_token: token,
     })
 
-    // console.log(token_check_result);
-
-    if(token){
+    //Check token validity
+    const datetime_current = new Date()
+    let diff = (datetime_current - token_check_result[0].date)/(1000*60)
+    
+    if(diff >= duration && token) {
+        console.log("token is invalid");
+        res.writeHead(404 , {'Content-Type': 'text/html'})
+        fs.readFile('./emailTemplates/error.html' , null , (error , data) => {
+            if(error){
+                res.write("Oops , link might be invalid")
+            } else {
+                res.write(data)
+            }
+            res.end()
+        })
+    } else if(diff < duration && token){
+        console.log("token vaild email verified");
         res.writeHead(200 , {'Content-Type': 'text/html'})
         fs.readFile('./emailTemplates/success.html' , null , (error , data) => {
             if(error){
@@ -55,17 +69,13 @@ const verifyEmail = async (req , res) => {
             res.end();
         })
     }
-    else {
-        res.writeHead(404 , {'Content-Type': 'text/html'})
-        fs.readFile('./emailTemplates/success.html' , null , (error , data) => {
-            if(error){
-                res.write("Oops , link might be invalid")
-            } else {
-                res.write(data)
-            }
-            res.end()
-        })
-    }
+
+    // if(token){
+        
+    // }
+    // else {
+        
+    // }
 }
 
 module.exports = { register , verifyEmail }

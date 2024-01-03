@@ -10,6 +10,6 @@ const { register , verifyEmail } = require('../controllers/auth')
 // };
 
 router.route('/register').post(register)
-router.route('/verify-email').get(verifyEmail)
+router.route('/verifyEmail').get(verifyEmail)
 
 module.exports = router
