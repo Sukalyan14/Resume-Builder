@@ -7,8 +7,6 @@ import IconBox from "./style component/IconBox";
 import Button from "./style component/Button";
 import axios from "axios";
 
-
-console.log(process.env.SERVER_URL , process.env.SERVER_PORT);
 const axios_client = axios.create({
     baseURL:`${process.env.SERVER_URL}${process.env.SERVER_PORT}/auth/register`
 })
