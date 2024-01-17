@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { register , verifyEmail } = require('../controllers/auth')
-
+const { checkDisposableEmail } = require('../middleware/checkDisposableEmail')
 // module.exports = app => {
 //     app.get("/api", (req, res) => {
 //         console.log("Hit the route");
@@ -9,7 +9,7 @@ const { register , verifyEmail } = require('../controllers/auth')
 //     });
 // };
 
-router.route('/register').post(register)
+router.route('/register').post(checkDisposableEmail , register)
 router.route('/verifyEmail').get(verifyEmail)
 
 module.exports = router
