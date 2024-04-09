@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan')
+const cookieParser = require('cookie-parser')
 require('dotenv-expand').expand(require('dotenv').config())
 
 const router = require('./routes/auth_route.js');
@@ -17,9 +18,8 @@ const port = process.env.PORT || 3300;
 const app = express();
 
 app.use(express.json());
-
 app.use(morgan('tiny'));
-
+app.use(cookieParser())
 // For Images in other statics
 app.use(express.static('client/public'));
 

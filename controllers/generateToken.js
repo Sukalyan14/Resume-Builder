@@ -6,9 +6,9 @@ const generate_token = () => {
             
     let token = crypto.createHash('MD5').update(current_date + random).digest('hex') 
 
-    let verificationLink = process.env.VERIFY_END_POINT_URL+"?key="+token;
+    // let verificationLink = process.env.VERIFY_END_POINT_URL+"?key="+token;
 
-    return { token , verificationLink }
+    return { token }
 }
 
 module.exports = generate_token
