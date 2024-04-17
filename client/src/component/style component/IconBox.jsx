@@ -1,4 +1,6 @@
 import { styled } from "styled-components"
+import '../../../public/style.css';
+
 //Styled Components
 const IconBox = styled.div`
     display: flex;
@@ -17,8 +19,8 @@ const IconBox = styled.div`
         }
     }};
     color: ${props => props.$github || props.$facebook ? '#fff' : null};
-    box-shadow:  1px 1px 3px #c7c7c7,
-            -1px -1px 3px #c7c7c7;
+    box-shadow:  1px 1px 3px var(--box-shadow),
+            -1px -1px 3px var(--box-shadow);
     &:hover {
         transform: scale(1.35);
         cursor: pointer;

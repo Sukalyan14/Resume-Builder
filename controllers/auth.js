@@ -34,7 +34,7 @@ const register = async(req , res) => {
         const errors = handleErrors(err)
         
         res.status(400).json({ errors })
-    } 
+    }
 }
 
 const verifyEmail = async (req , res) => {
@@ -77,97 +77,4 @@ const verifyEmail = async (req , res) => {
 
 module.exports = { register , verifyEmail }
 
-// const register = async (req , res) => {
-//     try{
-//         let emailId = req.body.email
-//         let password = req.body.password
 
-//         let mail_register_check = await RegisterCheckCluster0.find({
-//             email: emailId,
-//         })
-        
-//         //Mail Does Not Exists 
-//         if(mail_register_check && mail_register_check.length === 0) {
-
-//             let { token , verificationLink } = generate_token()
-
-//             const hash = await bcrypt.hash(password, saltRounds);
-
-//             const [ info , register_data ] = await Promise.all([
-                
-//                 sendMail(process.env.ADMIN_MAIL , emailId , emailSubject , emailTemplate , { logoUrl , verificationLink}) ,
-    
-//                 RegisterCheckCluster0.create({
-//                     email : emailId ,
-//                     session_token : token ,
-//                     password : hash , 
-//                     date:datetime_current,
-//                     time_stamp : time ,
-//                     verified : false
-//                 })
-//             ])
-
-//             if (info.accepted.length > 0){
-//                 return res.status(201).json({
-//                     message: 'Email Sent Successfully'
-//                 })
-//             } else {
-//                 throw new Error('Mail Not Sent')
-//             }
-//         }
-//         // If mail exists
-//         else if(mail_register_check && mail_register_check.length !== 0 && mail_register_check[0].verified === false){
-//             // Outside/equal Of duration
-//             if ((datetime_current - mail_register_check[0].date)/(1000*60) >= duration){
-                
-//                 let { token , verificationLink } = generate_token()
-
-//                 const [ info , update_data ] = await Promise.all([
-//                     sendMail(process.env.ADMIN_MAIL , emailId , emailSubject , emailTemplate , { logoUrl , verificationLink}) ,
-//                     RegisterCheckCluster0.findOneAndUpdate({ email:emailId } , {
-//                         session_token : token ,
-//                         date:datetime_current,
-//                         time_stamp : time , 
-//                     })
-//                 ])
-                
-//                 if (info.accepted.length > 0){
-//                     return res.status(201).json({
-//                         message: 'Email Sent Successfully'
-//                     })
-//                 } else {
-//                     throw new Error('Mail Not Sent')
-//                 }
-//             }
-//             // Within duration, just send mail 
-//             else {
-                
-//                 let verificationLink = process.env.VERIFY_END_POINT_URL+"?key="+mail_register_check[0].session_token
-
-//                 const info = await sendMail(process.env.ADMIN_MAIL , emailId , emailSubject , emailTemplate , { logoUrl , verificationLink})
-                
-//                 if(info.accepted.length > 0){
-//                     return res.status(201).json({
-//                         message: 'Email Sent Successfully'
-//                     })
-//                 } else {
-//                     throw new Error('Mail Not Sent')
-//                 }
-//             }
-//         }
-//         // Verified
-//         else if(mail_register_check && mail_register_check.length !== 0 && mail_register_check[0].verified === true){
-            
-//             return res.status(409).json({
-//                 message: "Email Already Registered"
-//             })
-//         }
-//     }
-//     catch(error){
-//         console.log(error);
-//         return res.status(500).json({
-//             status: 'Failed',
-//             message: error.message
-//         })
-//     }
-// }

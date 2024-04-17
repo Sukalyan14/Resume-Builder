@@ -4,7 +4,7 @@ import { FaGithub , FaApple , FaFacebookF } from "react-icons/fa"
 import '../../public/style.css';
 import IconBox from "./style component/IconBox";
 import Button from "./style component/Button";
-import { UPDATE_FORM , onFocusOut, onInputChange, validateInput } from "../utils/formUtils";
+import { UPDATE_FORM , onFocusOut, onInputChange } from "../utils/formUtils";
 
 function formReducer(state , action){
     switch (action.type){
@@ -22,46 +22,16 @@ function formReducer(state , action){
 
 const Login = (props) => {
 
+    const login = "login"
     const [formState , dispatch] = useReducer(formReducer , {isFormValid:false})
     
     const [showError , setShowError] = useState(false)
 
-    const handleSubmit = (event) =>{
-        event.preventDefault()
-
-        let isFormValid = true
-
-        for (const name in formState){
-            const item = formState[name]
-            const { value } = item
-            const { hasError , error } = validateInput( name , value)
-
-            if(hasError){
-                isFormValid = false
-            }
-
-            if(name){
-                dispatch({
-                    type: UPDATE_FORM , 
-                    data:{ name , value , hasError , error , touched:true , isFormValid }
-                })
-            }
-        }
-
-        if(!isFormValid) {
-            setShowError(true)
-        } else {
-            console.log(formState);
-        }
-
-        setTimeout(() => {
-            setShowError(false)
-        } , 5000)
-    }
+    const onSubmit = handleSubmit(formState, dispatch, setShowError , route_key)
     
     return (
         <>
-            <form className="login-register-form" onSubmit={handleSubmit}>
+            <form className="login-register-form" onSubmit={onSubmit}>
                             
                 <div className="form_control">
                     <input 

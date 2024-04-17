@@ -1,15 +1,12 @@
 import { useState , useReducer } from "react"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub , FaApple , FaFacebookF } from "react-icons/fa"
-import { UPDATE_FORM , onInputChange , onFocusOut , validateInput } from "../utils/formUtils";
+import { UPDATE_FORM , onInputChange , onFocusOut } from "../utils/formUtils";
 import '../../public/style.css';
 import IconBox from "./style component/IconBox";
 import Button from "./style component/Button";
 import axios from "axios";
-
-const axios_client = axios.create({
-    baseURL:`${process.env.SERVER_URL}${process.env.SERVER_PORT}/auth/register`
-})
+import { handleSubmit } from "../utils/handleSubmit"
 
 // http://localhost:5000/auth/register
 function formReducer(state , action){
@@ -28,52 +25,16 @@ function formReducer(state , action){
 
 const Register = (props) => {
     
+    const route_key = "register"
     const [formState , dispatch] = useReducer(formReducer , {isFormValid:false})
 
     const [showError , setShowError] = useState(false)
 
-    const handleSubmit = (event) =>{
-        event.preventDefault()
-
-        let isFormValid = true
-
-        for (const name in formState){
-            const item = formState[name]
-            const { value } = item
-            const { hasError , error } = validateInput( name , value , formState )
-
-            if(hasError){
-                isFormValid = false
-            }
-
-            if(name){
-                dispatch({
-                    type: UPDATE_FORM , 
-                    data:{ name , value , hasError , error , touched:true , isFormValid }
-                })
-            }
-        }
-
-        if(!isFormValid) {
-            setShowError(true)
-        } else {
-            //submit form to backend
-            axios_client.post('/' , { 
-                email:formState.email.value , 
-                password : formState.password.value
-             })
-            .then(res => console.log(res.data))
-            .catch(error => console.log(error.data))
-        }
-
-        setTimeout(() => {
-            setShowError(false)
-        } , 5000)
-    }
+    const onSubmit = handleSubmit(formState, dispatch, setShowError , route_key)
     
     return (
         <>
-            <form className="login-register-form" onSubmit={handleSubmit} >
+            <form className="login-register-form" onSubmit={onSubmit} >
             
                 <div className="form_control">
                     <input 

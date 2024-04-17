@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import ReactDOM  from "react-dom/client";
 import Wrapper from "./component/style component/Wrapper";
+import CustomPopup from "./component/style component/CustomPopup";
 
 const AppLayout = () => {
 
@@ -15,7 +16,8 @@ const AppLayout = () => {
 
     return (
         <div>
-            <Wrapper/>
+            {/* <Wrapper/> */}
+            <CustomPopup/>
         </div>
     )
 }
