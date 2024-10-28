@@ -12,7 +12,7 @@ export const validateInput = (name , value , formState) => {
                 hasError = true
                 error = "Email Cannot Be Empty"
             } else if (!EmailCheckRegex.test(value)){
-                hasError = true 
+                hasError = true
                 error = "Invalid Email. Please Check the Email"
             } else {
                 hasError = false
@@ -66,10 +66,13 @@ export const onInputChange = (name , value , dispatch , formState) => {
     // console.log(formState);
     const { hasError, error } = validateInput(name, value , formState)
     let isFormValid = true
-  
+    let isSubmitClicked = false
+    
+    
     for (const key in formState) {
+
       const item = formState[key]
-  
+
       if (key === name && hasError) {   // Check if the current field has error
         isFormValid = false
         break
@@ -82,14 +85,16 @@ export const onInputChange = (name , value , dispatch , formState) => {
   
     dispatch({
       type: UPDATE_FORM,
-      data: { name, value, hasError, error, touched: false, isFormValid },
+      data: { name, value, hasError, error, touched: false, isFormValid , isSubmitClicked },
     })
 }
 
 export const onFocusOut = (name , value , dispatch , formState) => {
     
     const { hasError , error } = validateInput(name , value , formState)
+    
     let isFormValid = true
+    let isSubmitClicked = false
     
     for ( const key in formState){
         const item = formState[key]
@@ -104,6 +109,6 @@ export const onFocusOut = (name , value , dispatch , formState) => {
 
     dispatch({
         type: UPDATE_FORM , 
-        data:{ name , value , hasError , error , touched:true , isFormValid }
+        data:{ name , value , hasError , error , touched:true , isFormValid , isSubmitClicked}
     })
 }

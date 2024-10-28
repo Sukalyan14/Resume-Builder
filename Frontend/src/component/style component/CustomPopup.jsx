@@ -1,6 +1,25 @@
 import { styled } from "styled-components"
 import { HiMiniXMark } from "react-icons/hi2";
 import '../../../public/style.css';
+import { useCustomPopUp } from "../../useContext/CustomPopUpContext"
+
+const CustomBackGround = styled.div`
+    width: 96vw;
+    height: 96vh;
+    margin: 10px;
+    background: rgba(207, 207, 207, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2.7px);
+    -webkit-backdrop-filter: blur(2.7px);
+    overflow: hidden;
+    /* border: 1px solid rgba(255, 255, 255, 0.3); */
+    position: absolute;
+    top: ${(props) => !props.$appear ? '-100%' : '0%'};
+    left: 0;
+    display: grid;
+    place-items: center;
+`
 
 const CustomPopupWrapper = styled.div`
     width: 300px;
@@ -80,16 +99,21 @@ const resendMailClick = () => {
 }
 
 const CustomPopup = () => {
+
+    const { activeCustomPopUp } = useCustomPopUp()
+    
     return (
-        <CustomPopupWrapper>
-            <h4>Verify Your Email</h4>
-            <div className="cross">
-                <HiMiniXMark />
-            </div>
-            <p className="message">An mail has been sent to your registered email , Please verify</p>
-            <p className="resend-mail" onClick={resendMailClick}>Resend Mail</p>
-            <p className="timer">20</p>
-        </CustomPopupWrapper>
+        <CustomBackGround $appear={activeCustomPopUp}>
+            <CustomPopupWrapper>
+                <h4>Verify Your Email</h4>
+                <div className="cross">
+                    <HiMiniXMark />
+                </div>
+                <p className="message">An mail has been sent to your registered email , Please verify</p>
+                <p className="resend-mail" onClick={resendMailClick}>Resend Mail</p>
+                <p className="timer">20</p>
+            </CustomPopupWrapper>
+        </CustomBackGround>
     )
     
 }

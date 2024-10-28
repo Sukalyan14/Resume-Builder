@@ -1,14 +1,19 @@
-import { useState , useReducer } from "react"
+import { useReducer, useState } from "react"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub , FaApple , FaFacebookF } from "react-icons/fa"
-import { UPDATE_FORM , onInputChange , onFocusOut } from "../utils/formUtils";
 import '../../public/style.css';
 import IconBox from "./style component/IconBox";
 import Button from "./style component/Button";
-import axios from "axios";
+import { UPDATE_FORM , onFocusOut, onInputChange } from "../utils/formUtils";
 import { handleSubmit } from "../utils/handleSubmit"
 
-// http://localhost:5000/auth/register
+const initialState = {
+    email: { value: "", touched: false, hasError: true, error: "" },
+    password: { value: "", touched: false, hasError: true, error: "" },
+    confirm_password: { value: "", touched: false, hasError: true, error: "" },
+    isFormValid: false, 
+}
+
 function formReducer(state , action){
     switch (action.type){
         case UPDATE_FORM:
@@ -23,24 +28,25 @@ function formReducer(state , action){
     }
 }
 
-const Register = (props) => {
-    
-    const route_key = "register"
-    const [formState , dispatch] = useReducer(formReducer , {isFormValid:false})
+const Login = (props) => {
 
+    const route_key = "login"
+    const [formState , dispatch] = useReducer(formReducer , initialState)
+    
     const [showError , setShowError] = useState(false)
 
     const onSubmit = handleSubmit(formState, dispatch, setShowError , route_key)
     
+    
     return (
         <>
-            <form className="login-register-form" onSubmit={onSubmit} >
-            
+            <form className="login-register-form" onSubmit={onSubmit}>
+                            
                 <div className="form_control">
                     <input 
                         type="text" 
                         name="email" 
-                        value={formState.email ? formState.email.value : ""} 
+                        value={formState.email.value} 
                         onChange={e => {onInputChange("email" , e.target.value , dispatch , formState)}}  
                         onBlur={e => {onFocusOut("email" , e.target.value , dispatch , formState)}}
                         placeholder="Email"/>
@@ -52,25 +58,16 @@ const Register = (props) => {
                     <input 
                         type="password" 
                         name="password" 
-                        value={formState.password ? formState.password.value : ""} 
+                        value={formState.password.value} 
                         onChange={e => {onInputChange("password" , e.target.value , dispatch , formState)}} 
                         onBlur={e => {onFocusOut("password" , e.target.value , dispatch , formState)}}
                         placeholder="Password" required />
                     <div className="error-message">{(formState.password && formState.password.touched && formState.password.hasError) ? formState.password.error : " "}</div>
                 </div>
-                                    
-                <div className="form_control">
-                    <input 
-                        type="password" 
-                        name="confirm_password" 
-                        value={formState.confirm_password ? formState.confirm_password.value : ""} 
-                        onChange={e => {onInputChange("confirm_password" , e.target.value , dispatch , formState)}} 
-                        onBlur={e => {onFocusOut("confirm_password" , e.target.value , dispatch , formState)}}
-                        placeholder="Confirm Password" required />
-                    <div className="error-message">{(formState.confirm_password && formState.confirm_password.touched && formState.confirm_password.hasError) ? formState.confirm_password.error : " "}</div>
-                </div>
+                            
+                <p className="forget_password">Forgot Password?</p>
 
-                <Button btn_text = "Sign Up"/>
+                <Button btn_text = "Sign In" />  {/* Can try a backdrop state based expression for button disappearenc */}
 
                 <p className="line_break">Or continue with</p>
                 
@@ -97,17 +94,15 @@ const Register = (props) => {
                 <p className="register-link">
                     Not a member? 
                     <span onClick = {() => {
-                        props.onFormSwitch('login')
+                        props.onFormSwitch('register')
                     }}>
-                        Log In
+                        Register Now
                     </span>
                 </p>
             </form>
-
-            
 
         </>
     )
 }
 
-export default Register
+export default Login

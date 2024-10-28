@@ -1,5 +1,5 @@
 import axios from "axios"
-import { UPDATE_FORM , validateInput } from "../utils/formUtils";
+import { UPDATE_FORM , validateInput } from "./formUtils";
 
 export const handleSubmit = (formState, dispatch, setShowError , route_key) => (event) =>{
 
@@ -10,20 +10,24 @@ export const handleSubmit = (formState, dispatch, setShowError , route_key) => (
     event.preventDefault()
 
     let isFormValid = true
+    let isSubmitClicked = true
 
     for (const name in formState){
         const item = formState[name]
+        
         const { value } = item
         const { hasError , error } = validateInput( name , value , formState )
 
         if(hasError){
             isFormValid = false
+            isSubmitClicked = false
         }
 
         if(name){
+            console.log(isSubmitClicked);
             dispatch({
                 type: UPDATE_FORM , 
-                data:{ name , value , hasError , error , touched:true , isFormValid }
+                data:{ name , value , hasError , error , touched:true , isFormValid , isSubmitClicked }
             })
         }
     }
@@ -31,13 +35,23 @@ export const handleSubmit = (formState, dispatch, setShowError , route_key) => (
     if(!isFormValid) {
         setShowError(true)
     } else {
+        // isSubmitClicked = true
+        // dispatch({
+        //     type: UPDATE_FORM , 
+        //     data:{ isSubmitClicked }
+        // })
+        // console.log(formState);
         //submit form to backend
-        axios_client.post('/' , { 
-            email:formState.email.value , 
-            password : formState.password.value
-         })
-        .then(res => console.log(res.data))
-        .catch(error => console.log(error.data))
+        // axios_client.post('/' , { 
+        //     email:formState.email.value , 
+        //     password : formState.password.value
+        //  })
+        // .then(res => {
+        //     console.log(res.data);
+        //     // console.log(activeCustomPopUp , setCustomPopup);
+        //     return res.data
+        // })
+        // .catch(error => error.data)
     }
 
     setTimeout(() => {

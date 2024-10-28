@@ -2,23 +2,19 @@ import React, { createContext, useEffect, useState } from "react";
 import ReactDOM  from "react-dom/client";
 import Wrapper from "./component/style component/Wrapper";
 import CustomPopup from "./component/style component/CustomPopup";
+import { CustomPopUpProvider } from "./useContext/CustomPopUpContext";
 
 const AppLayout = () => {
 
-    // const x = usePostRequest('/post')
-    
-    // console.log(x);
-    // if (!x){
-    //     console.log(x);
-    // } else {
-    //     console.log(x);
-    // }
+        // const [activeCustomPopup , setCustomPopup] = useState(false)
 
     return (
-        <div>
-            {/* <Wrapper/> */}
-            <CustomPopup/>
-        </div>
+        <>
+            <CustomPopUpProvider>
+                <Wrapper/>
+                <CustomPopup/>
+            </CustomPopUpProvider>
+        </>
     )
 }
 

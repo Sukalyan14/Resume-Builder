@@ -31,9 +31,9 @@ body{
     justify-content: center;
     align-items: center;
     background-color: var(--body-bg);
-    /* background: url('./assets/janosch-diggelmann-7vpWju89jKc-unsplash.jpg');
-    background-position:cover;
-    background-size: contain;
+    /* background: url('../src/assets/landing-bg-unsplash.png');
+    background-position:center;
+    background-size: cover;
     background-repeat: no-repeat; */
 }
 
