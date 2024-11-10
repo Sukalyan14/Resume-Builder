@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root{
+    --input-field-color: rgba( 242, 243, 244 , 1);
+    --input-field-border:#C0C0C0;
+    --arrow-color:#abb2b9 ;
+    --error-color:#e91e63;
+    --button-color:#f7971e;
+    --header-color:#fff;
+    /* --top-container:linear-gradient(90deg, #FAD961 0%, #F76B1C 100%); */
+    /* --top-container:linear-gradient(to right, #F37335, #FDC830);  */
+    /* --top-container:linear-gradient(to right, #F2C94C, #F2994A);   */
+    /* --top-container:linear-gradient(to right, #f7971e,  #FFCC33); */
+    --top-container:linear-gradient(to right, #ffb75e, #ed8f03);
+    --spare-blue:#29b6f6;
+    --body-bg: #f2f3f4 ;
+    --box-shadow:#c7c7c7;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
+    font-family: 'Lato', sans-serif;
+}
+
+
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    background-color: var(--body-bg);
+}
+
+/* input{
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 9px;
+    background-color: var(--input-field-color);
+    border: 0.89px solid var(--input-field-border);
+    transition: all 0.3s ease;
+} */
+
+/* input[type = "text"]:focus , 
+input[type = "password"]:focus{
+    outline: none;
+    border: 1px solid var(--button-color);
+}  */
+
+/* .custom-input {
+    @apply border border-input-field-border rounded;
+} */
+
+/* Add the focus style */
+/* .custom-input:focus {
+    @apply outline-none border-button-color;
+} */
