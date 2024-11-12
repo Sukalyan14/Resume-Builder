@@ -1,9 +1,6 @@
 import Bg from './assets/pngegg.png'
 import './App.css'
-import { TopContainer } from './components/styled-components/TopContainer'
-import {Login} from './components/Login'
-
-
+import { BottomContainer, Login , TopContainer } from './components/index'
 
 function App() {
 
@@ -22,24 +19,9 @@ function App() {
                   rounded-2xl 
                   overflow-hidden"
       >
-          
-          {/* <div className="top-container">
-            <h1>Create Account</h1>
-          </div> */}
-          <TopContainer>
-            
-            <h2 className='text-3xl font-extrabold text-header-color tracking-wide'>Create</h2>
-            <h2 className='text-3xl font-extrabold text-header-color tracking-wide'>Account</h2>
-            <h5 className='text-lg font-medium text-header-color mt-1'>Please Sign Up To Continue!</h5>
-            
-          </TopContainer>
-          
+          <TopContainer/>
           <Login />
-
-          <div className="bottom-container">
-            <p>Not a member <span>Login</span></p>
-          </div>
-          
+          <BottomContainer />          
       </div>
       
       <div className="h-full">

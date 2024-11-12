@@ -1,6 +1,6 @@
 import { keyframes, styled } from "styled-components";
 
-export const TopContainer = styled.div`
+const TopCurtain = styled.div`
     /* width: 100%; */
     height: 200px;
     /* background-color: #FAD961; */
@@ -23,3 +23,4 @@ export const TopContainer = styled.div`
         z-index: -9;
     }
 `
+export default TopCurtain
