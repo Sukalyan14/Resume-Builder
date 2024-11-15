@@ -1,6 +1,5 @@
 import React from 'react'
-import Button from './styled-components/Button'
-import { Input } from './index'
+import { Input , Button } from './index'
 import { useForm } from 'react-hook-form'
 
 const Login = () => {
@@ -20,21 +19,18 @@ const Login = () => {
         onSubmit={(e) => e.preventDefault()}
     >   
         <Input 
-            id='email'
             label="email"
             type="email"
             placeholder="Enter your email"
         />
 
         <Input 
-            id='password'
             label="password"
             type="password"
             placeholder="Enter your password"
         />    
 
-    
-        <p className='text-slate-600 py-1 text-sm text-end'>Forgot Password?</p>
+        <p className='text-slate-600 pb-2 text-sm text-end'>Forgot Password?</p>
 
         <Button btn_text = "Sign In" onClick={onSubmit} />
 

@@ -10,13 +10,12 @@ const IconBox = styled.div`
     border-radius: 10px;
     transition: all 0.3s ease-in-out;
     background-color: ${(props) => {
-        if(props.$github){
-            return '#000'
-        } else if(props.$facebook){
-            return '#1977F3'
-        } else {
-            return 'linear-gradient(145deg, #e6e6e6, #ffffff)'
-        }
+        if(props.$github) return '#000'
+        
+        if(props.$facebook) return '#1977F3'
+        
+        return 'linear-gradient(145deg, #e6e6e6, #ffffff)'
+        
     }};
     color: ${props => props.$github || props.$facebook ? '#fff' : null};
     box-shadow:  1px 1px 3px var(--box-shadow),

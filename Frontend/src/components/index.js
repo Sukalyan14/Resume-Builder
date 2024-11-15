@@ -6,6 +6,7 @@ import TopContainer from "./TopContainer/TopContainer";
 import Login from "./Login";
 import StyledLine from "./styled-components/StyledLine";
 import BottomContainer from "./BottomContainer/BottomContainer";
+import Register from "./Register";
 
 export {
     Input ,
@@ -15,5 +16,6 @@ export {
     TopContainer , 
     Login , 
     StyledLine ,
-    BottomContainer
+    BottomContainer , 
+    Register
 } 
