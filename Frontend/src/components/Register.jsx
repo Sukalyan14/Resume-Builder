@@ -1,19 +1,33 @@
 import React from 'react'
+import axios from 'axios'
 import { Input , Button } from './index'
-import { useForm } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { togglePopup } from '../feature/CustomPopupSlice'
+import { axiosClientAuth } from '../constant/axios-client'
 
 function Register() {
 
-    const formMethods = useForm({
-        mode:"all",
-        reValidateMode: 'onBlur',
-    })
+    const dispatch = useDispatch()
 
-    const { handleSubmit } = formMethods
+    const { handleSubmit } = useFormContext()
 
-    const submit = async (data , errors) => {
-        console.log(data)
-        console.log(errors);
+    const submit = async ({ email , password }) => {
+    
+        // post data
+        const data = await axiosClientAuth.post('/register', {
+            email,
+            password 
+        })
+
+        //bring the popup out
+        dispatch(togglePopup())
+
+        if(data.user){
+            
+            //Check for verification
+        
+        }
     }
 
   return (
@@ -26,24 +40,24 @@ function Register() {
             label="email"
             type="email"
             placeholder="Enter your email"
-            {...formMethods}
         />
 
         <Input 
             label="password"
             type="password"
             placeholder="Enter your password"
-            {...formMethods}
         /> 
 
         <Input 
-            label='confirm-password'
-            type='confirm-password'
+            label='confirm_password'
+            type='confirm_password'
             placeholder="Re-Enter your password"
-            {...formMethods}
         />   
         
-        <p className='text-slate-600 pb-2 text-sm text-end'>Forgot Password?</p>
+        {/* <p 
+            className='text-slate-600 pb-2 text-sm text-end'
+            onClick={triggerPopup}
+        >Forgot Password?</p> */}
 
         <Button btn_text = "Sign In"/>
 

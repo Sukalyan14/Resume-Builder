@@ -6,6 +6,8 @@ import TopContainer from "./TopContainer/TopContainer";
 import Login from "./Login";
 import StyledLine from "./styled-components/StyledLine";
 import BottomContainer from "./BottomContainer/BottomContainer";
+import CustomPopupContainer from "./styled-components/CustomPopupContainer";
+import CustomPopup from "./CustomPopup";
 import Register from "./Register";
 
 export {
@@ -17,5 +19,7 @@ export {
     Login , 
     StyledLine ,
     BottomContainer , 
-    Register
+    Register , 
+    CustomPopupContainer,
+    CustomPopup
 } 

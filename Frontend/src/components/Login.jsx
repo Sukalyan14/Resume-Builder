@@ -1,22 +1,25 @@
 import React from 'react'
 import { Input , Button } from './index'
-import { useForm } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { togglePopup } from '../feature/CustomPopupSlice'
 
 const Login = () => {
 
-    const { handleSubmit } = useForm()
+    const dispatch = useDispatch()
 
-    const onSubmit = handleSubmit(data => {
-        console.log(data);
-    })
-    // console.log({...methods});
+    const { handleSubmit } = useFormContext()
+
+    const submit =  async (data) => {
+        console.log(data)
+    }
     
   return (
 
     <form 
         className="mt-10 mb-3 container"
         noValidate
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSubmit(submit)}
     >   
         <Input 
             label="email"
@@ -30,9 +33,11 @@ const Login = () => {
             placeholder="Enter your password"
         />    
 
-        <p className='text-slate-600 pb-2 text-sm text-end'>Forgot Password?</p>
+        <p 
+            className='text-slate-600 pb-2 text-sm text-end'
+        >Forgot Password?</p>
 
-        <Button btn_text = "Sign In" onClick={onSubmit} />
+        <Button btn_text = "Sign In" />
 
     </form>
 

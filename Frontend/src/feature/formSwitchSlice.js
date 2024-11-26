@@ -1,20 +1,20 @@
-import { createSlice , createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 //formChange - false for login and true for register
 const initialState = {
     formChange:true
 }
 
-export const register_login_formSlice = createSlice({
+const formSwitchSlice = createSlice({
     name:'register_login',
     initialState,
     reducers:{
-        switchForm: (state , action) => {
-            state.formChange = action.payload
+        switchForm: (state) => {
+            state.formChange = !state.formChange
         }
     }
 })
 
-export const {switchForm} = register_login_formSlice.actions
+export const { switchForm } = formSwitchSlice.actions
 
-export default register_login_formSlice.reducer 
+export default formSwitchSlice.reducer 

@@ -18,7 +18,9 @@ export default {
         'body-bg': '#f2f3f4',
         'box-shadow': '#c7c7c7',
         'box-shadow-light':'rgba(15, 15, 15, 0.2)',
-        'form-background':'rgba( 234, 236, 238 , 0.7)'
+        'form-background':'rgba( 234, 236, 238 , 0.7)',
+        'custom-background':'rgba(207, 207, 207, 0.08)',
+        'custom-background-shadow':'rgba(0, 0, 0, 0.1)',
       },
       backdropBlur: {
         xs: '2px',

@@ -3,41 +3,28 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
-require('dotenv-expand').expand(require('dotenv').config())
-
+const conf = require('./config/config.js') 
+require('dotenv').config();
 const router = require('./routes/auth_route.js');
 const connectDb = require('./db/connect.js')
 
 //Loads the handlebars module
 // const handlebars = require('express-handlebars');
 
-const allowed_origins = ['http://localhost:1234'];
-const port = process.env.PORT || 3300;
-
-// Middleware
 const app = express();
 
+
+const allowed_origins = ['http://localhost:5173'];
+const port = conf.PORT
+
+// Middleware
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cookieParser())
-// For Images in other statics
-app.use(express.static('client/public'));
-
-
-//Sets our app to use the handlebars engine
-// app.set('view engine', 'handlebars');
-
-// //Sets handlebars configurations (we will go through them later on)
-// app.engine('handlebars', handlebars({
-//     layoutsDir: __dirname + '/views/layouts',
-// }));
-
-// app.use(cors({
-//   origin: allowed_origins[0],
-//   optionsSuccessStatus: 200
-// }));
-
-app.use(cors());
+app.use(cors({
+    origin:allowed_origins,
+    credentials:true
+}));
 
 // Register the routes with appropriate paths
 app.use('/auth', router);
@@ -45,7 +32,7 @@ app.use('/auth', router);
 
 const start = async () => {
     try{
-        await connectDb(process.env.MONGO_CONNECT_STRING)
+        await connectDb(conf.db.MONGO_CONNECT_STRING)
         app.listen(port, () => console.log(`Db Connected && Server Listening at ${port}....`));
     }
     catch(err){

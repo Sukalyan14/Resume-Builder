@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import formSwitchReducer from '../feature/formSwitchSlice'
+import formSwitchSlice from '../feature/formSwitchSlice'
+import customPopupSlice from '../feature/customPopupSlice'
 
 export const store = configureStore({
     reducer:{
-        register_login:formSwitchReducer
+        register_login:formSwitchSlice,
+        custom_popup:customPopupSlice
     }
 })

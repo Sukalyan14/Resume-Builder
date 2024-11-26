@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const { isEmail } = require('validator')
 const bcrypt = require('bcryptjs')
-const sendMail = require('../controllers/sendMail')
+const sendMail = require('../utils/sendMail')
+const conf = require('../config/config')
 
 // const register_verify_schema = new mongoose.Schema({
 //     email:String , 
@@ -23,7 +24,7 @@ const register_verify_schema = new mongoose.Schema({
     password:{
         type:String,
         // required:[true , "Please enter an email"], not neccessary here , already have a check for such at the front end
-        minlength:[6 , 'Min Length of password is eigth characters']
+        minlength:[6 , 'Min Length of password is six characters']
     },
     date:{
         type:Date,
@@ -45,29 +46,31 @@ register_verify_schema.pre('save' , async function(next) {
     next()
 })
 
-//Fire a Mail after record has been saved to db
-register_verify_schema.post('save' , async function(doc) {
+//Fire a Mail before record has been saved to db
+register_verify_schema.pre('save' , async function() {
     
-    // if(doc.isNew){
-        // console.log("mail");
-        let verificationLink = process.env.VERIFY_END_POINT_URL+"?key="+this.session_token;
-    
-        // console.log(verificationLink);
+    if(this.isNew){
+        
+        let verificationLink = conf.VERIFY_ENDPOINT_URL()+"?key="+this.session_token;
+        
         //Template Constants
         const emailSubject = "Email Verification"
         const emailTemplate = 'emailVerifications'
-        const logoUrl = process.env.LOGO_URL
-    
+        const logoUrl = conf.oAuthMail.LOGO_URL
+        // const emailTemplatePath = path.join(__dirname, 'emailTemplates', `${emailTemplate}.handlebars`);
+        
         try{
-            const mailResult = await sendMail(process.env.ADMIN_MAIL , this.email , emailSubject , emailTemplate , { logoUrl , verificationLink })
-            // console.log(mailResult , "register_verify , line 60");
+            const mailResult = await sendMail(conf.oAuthMail.USER_NAME , this.email , emailSubject , emailTemplate , { logoUrl , verificationLink })
+
+            //need more testing to setup error handling for mailResult
+            console.log(mailResult , "register_verify , line 60");
         }
         catch(error){
             // console.log("hello error");
-            // console.log(error , "line 65 userschema")
+            console.log(error , "line 65 userschema")
             throw error
         }
-    // }
+    }
     
 })
 

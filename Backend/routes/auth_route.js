@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { register , verifyEmail } = require('../controllers/auth')
+const register = require('../controllers/auth/registerEmail')
+const verifyEmail = require('../controllers/auth/verifyEmail')
 const { checkDisposableEmail } = require('../middleware/checkDisposableEmail')
 // module.exports = app => {
 //     app.get("/api", (req, res) => {

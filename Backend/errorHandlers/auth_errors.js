@@ -6,7 +6,8 @@ const handleErrors = (err) => {
 
     //Duplicate Emails
     if(err.code === 11000){
-        errors.email = 'Email Already Registered'
+        // errors.email = 'Email Already Registered'
+        errors.email = 'Please complete verification before re-sending mail'
     }
 
     //Email Error
