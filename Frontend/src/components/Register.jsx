@@ -23,16 +23,16 @@ function Register() {
         //bring the popup out
         dispatch(togglePopup())
 
-        if(data.user){
+        // if(data.user){
             
-            //Check for verification
+        //     //Check for verification
         
-        }
+        // }
     }
 
   return (
     <form 
-    className="mt-10 mb-3 container min-h-[360px]"
+    className="mt-10 container min-h-[360px]"
     noValidate
     onSubmit={handleSubmit(submit)}
     >   

@@ -6,7 +6,7 @@ const conf = {
     dev : {
         PORT : process.env.PORT || 3000,
         BASE_URL : process.env.BASE_URL,
-        VERIFY_ENDPOINT_URL : function() {return process.env.VERIFY_ENDPOINT_URL.replace("${BASE_URL}" , this.BASE_URL).replace("${PORT}" , this.PORT)} ,
+        VERIFY_ENDPOINT_URL : () => process.env.VERIFY_ENDPOINT_URL.replace("${BASE_URL}" , conf[env].BASE_URL).replace("${PORT}" , conf[env].PORT) ,
         oAuthMail : {
             SERVICE : process.env.MAIL_SERVICE,
             SERVICE_SECURE : process.env.MAIL_SERVICE_SECURE,
@@ -36,6 +36,5 @@ const conf = {
     },
     production:{}
 }
-
+// console.log(conf[env].BASE_URL , conf[env].PORT , conf[env].VERIFY_ENDPOINT_URL() , "config")
 module.exports = conf[env]
-// console.log(conf[env].VERIFY_ENDPOINT_URL() , "config")

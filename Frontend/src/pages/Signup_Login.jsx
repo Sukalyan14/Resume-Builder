@@ -16,14 +16,14 @@ function Signup_Login() {
   })
   
   const formState = useSelector((state) => state.register_login.formChange)
-
+  // max-w-screen-xl
   return (
     <FormProvider {...methods}>
-      <div className='max-w-screen-xl h-[850px] flex relative'>
+      <div className='w-screen h-[900px] flex relative justify-center items-center px-10'>
       {/* Main page content */}
         <div 
           className="w-[350px]
-                    h-[800px]
+                    h-[750px]
                     m-3 p-5
                     flex flex-col justify-evenly
                     bg-form-background 

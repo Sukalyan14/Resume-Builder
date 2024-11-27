@@ -56,11 +56,29 @@
         <h4>Congratulations!</h4>
         <p>Your Email Address is Verified.</p>
         <p>You can now login into your account</p>
+        <!-- for Now keeping it hard coded -->
+        <p>You will be redirected to the login page in <span id="redirectCountDown" style="font-weight: 500; font-size: 1.1rem;">5</span> seconds</p>
+        
         <div>
             <i class="fa fa-check-circle" style="font-size:60px;color:green;" aria-hidden="true"></i>
         </div>
-        
+        <a href="http://localhost:5173/">Incase of failure Click this button</a>
     </div>
     <!-- <p>If above button is not working then copy this Link in  </p> -->
 </body>
+<script>
+    let redirectCountDown = document.querySelector('#redirectCountDown')
+    let countDown = 5
+    let timer = setInterval(() => {
+                   
+                   if(countDown <= 0) {
+                       window.location.href = 'http://localhost:5173/';
+                       countDown = 5 //reset countDown
+                       redirectCountDown.innerText = 'Redirecting...'
+                       clearInterval(timer);
+                   }
+                   countDown--;
+                   redirectCountDown.innerText = countDown 
+               }, 1000);
+</script>
 </html>

@@ -54,7 +54,6 @@
             }
             .btn:hover{
                 cursor: pointer;
-                transform: scale(0.9);
             }
         </style>
     </head>
@@ -69,7 +68,7 @@
             <h4>Hello There!</h4>
             <p>Thanks for Checking , this mail is a test for email verification via backend</p>
             <a href="{{ verificationLink }}">
-                <button class="btn">Verify Email</button>
+                <button class="btn" style="hover:cursor:pointer">Verify Email</button>
             </a>    
             <p>Button not working? Try pasting this link in to your browser:<a href="{{ verificationLink }}">{{ verificationLink }}</a></p>
             

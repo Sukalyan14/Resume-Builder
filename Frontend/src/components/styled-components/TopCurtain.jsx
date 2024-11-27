@@ -26,14 +26,14 @@ const TopCurtain = styled.div`
 
     &::after{
         content: "";
-        width: 280%;
+        width: 275%;
         /* height:650px; */
-        height: 340%;
+        height: 310%;
         position: absolute;
         /* top: -500px;
         left: -210px; */
-        top: -260%;
-        left: -60%;
+        top: -250%;
+        left: -50%;
         transform: rotate(-50deg);
         border-radius: 50%;
         background: var(--top-container);
