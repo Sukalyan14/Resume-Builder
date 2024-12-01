@@ -1,27 +1,38 @@
 import React from 'react'
-import axios from 'axios'
 import { Input , Button } from './index'
 import { useFormContext } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { togglePopup } from '../feature/CustomPopupSlice'
+import { togglePopup , updateStatus_Message } from '../feature/customPopupSlice'
 import { axiosClientAuth } from '../constant/axios-client'
+import { switchForm } from '../feature/formSwitchSlice'
+import conf from '../config/config'
 
 function Register() {
 
+    const delay = conf.countDown.COUNTDOWN_INTERVAL
+
     const dispatch = useDispatch()
 
-    const { handleSubmit } = useFormContext()
+    const { handleSubmit , reset } = useFormContext()
 
     const submit = async ({ email , password }) => {
-    
+        
+        //bring the popup out
+        dispatch(togglePopup())
         // post data
-        const data = await axiosClientAuth.post('/register', {
+        const response = await axiosClientAuth.post('/register', {
             email,
             password 
         })
 
-        //bring the popup out
-        dispatch(togglePopup())
+        if(response.data){
+            dispatch(updateStatus_Message(response.data))
+
+            if(response.data.verified) setTimeout(() => {
+                dispatch(togglePopup())
+                reset()
+            } , delay*2)   
+        }
 
         // if(data.user){
             

@@ -1,12 +1,8 @@
 import React from 'react'
 import { Input , Button } from './index'
 import { useFormContext } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
-import { togglePopup } from '../feature/CustomPopupSlice'
 
 const Login = () => {
-
-    const dispatch = useDispatch()
 
     const { handleSubmit } = useFormContext()
 

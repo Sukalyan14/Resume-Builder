@@ -18,8 +18,11 @@ const Line = styled.div`
         border-top: 1px solid transparent;
         position: absolute;
         bottom: 40%;
-        left: 10px;
+        left: -5%;
+        /* left: 10px; */
+        /* transform: translateX(-50%); */
     }
+
     &::before{
         content: "";
         width: 0;
@@ -29,7 +32,7 @@ const Line = styled.div`
         border-bottom: 1px solid transparent;
         position: absolute;
         bottom: 40%;
-        right: 10px;
+        right: -5%;
     }
 `
 const StyledLine = ({text = "Or continue with"}) => (

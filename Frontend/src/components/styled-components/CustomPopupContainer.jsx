@@ -47,7 +47,8 @@ const CustomPopupWrapper = styled.div`
     height: min-content;
     text-align: center;
     display: grid;
-    grid-template-columns: 1fr 1fr 0.1fr;
+    /* grid-template-columns: 1fr 1fr 0.1fr; */
+    grid-template-columns: ${(props) => props.$showMessage ? "1fr" : "1fr 1fr 0.1fr"};
     grid-template-rows: 0.2fr 1fr 0.5fr;
     gap: 10px;
     padding: 18px;
@@ -74,6 +75,8 @@ const CustomPopupWrapper = styled.div`
         display: flex;
         align-items: center;
         grid-column: 1/4;
+        margin: auto;
+        text-align: center;
     }
     .cross{
         /* grid-area: cross; */
@@ -99,6 +102,9 @@ const CustomPopupWrapper = styled.div`
         justify-content: flex-start;
         align-items: flex-end;
     }
+    .loader{
+        grid-row: 2/3;
+    }
     .cross:hover,
     .resend-mail:hover:not([disabled]){
         cursor: pointer;
@@ -110,11 +116,11 @@ const CustomPopupWrapper = styled.div`
     }
 `
 
-const CustomPopupContainer = ({children , popUpStatus , enableReSend}) => {
+const CustomPopupContainer = ({children , popUpStatus , enableReSend , showMessage}) => {
 
     return (
         <CustomBackGround $appear={popUpStatus}>
-            <CustomPopupWrapper $ready={!enableReSend}>
+            <CustomPopupWrapper $ready={!enableReSend} $showMessage = {showMessage}>
                 {children}
             </CustomPopupWrapper>
         </CustomBackGround>

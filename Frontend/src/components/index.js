@@ -9,6 +9,7 @@ import BottomContainer from "./BottomContainer/BottomContainer";
 import CustomPopupContainer from "./styled-components/CustomPopupContainer";
 import CustomPopup from "./CustomPopup";
 import Register from "./Register";
+import Loader from "./styled-components/Loader";
 
 export {
     Input ,
@@ -21,5 +22,6 @@ export {
     BottomContainer , 
     Register , 
     CustomPopupContainer,
-    CustomPopup
+    CustomPopup,
+    Loader
 } 

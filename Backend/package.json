@@ -4,9 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "client": "cd client && npm run start",
-    "server": "nodemon server.js",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "Sukalyan",

@@ -21,9 +21,9 @@ const Input = forwardRef( ({ label , type , placeholder , ...props } , ref) => {
     
     //For password Validations
     const passwordValidation = {
-        hasSpecialChar : (value) => specialCharacterCheckRegex.test(value) || 'Must have special characters',
         hasLowerCase: (value) => lowerCaseCheckRegex.test(value) || 'Must have lower-case characters',
         hasUpperCase: (value) => upperCaseCheckRegex.test(value) || 'Must have upper-case characters',
+        hasSpecialChar : (value) => specialCharacterCheckRegex.test(value) || 'Must have special characters',
         hasNumber: (value) => numberCheckRegex.test(value) || 'Must have numbers', 
         minlength : (value) => value.length >= 6 || 'Must be atleast six characters',
     }

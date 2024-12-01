@@ -1,6 +1,5 @@
 const RegisterCheckCluster0 = require('../../models/register_verify')
 const generate_token = require("../../utils/generateToken")
-const generateJWT = require('../../utils/generatejwt')
 const handleErrors = require('../../errorHandlers/auth_errors')
 const sendMail = require('../../utils/sendMail')
 const conf = require('../../config/config')
@@ -10,11 +9,6 @@ const register = async(req , res) => {
     const { email , password } = req.body
     
     //Base Constants
-    const jwtDuration = conf.jwt.JWT_DURATION
-    const secure = conf.cookies.SECURE
-    const httpOnly = conf.cookies.HTTP_ONLY
-    const sameSite = conf.cookies.SAME_SITE
-    const domain = conf.cookies.DOMAIN
     const verficationTokenDuration = conf.oAuthMail.VERIFICATION_TOKEN_DURATION
 
     try{
@@ -25,8 +19,7 @@ const register = async(req , res) => {
         
         //Previously tried registering but failed . //Update the session token if token expired pending
         if(emailCheck.length !== 0 && emailCheck[0].verified === false){
-            console.log("here1")
-
+            
             const datetime_current = new Date()
             let diff = (datetime_current - emailCheck[0].date)/1000
 
@@ -52,7 +45,7 @@ const register = async(req , res) => {
                     
                     const mailResult = await sendMail(conf.oAuthMail.USER_NAME , email , emailSubject , emailTemplate , { logoUrl , verificationLink })
                     
-                    console.log('Verification Mail sent , Db updated')
+                    // console.log('Verification Mail sent , Db updated')
                 } else {
                     throw new Error('Verification Status Update Falied')
                 }
@@ -64,13 +57,13 @@ const register = async(req , res) => {
                 const mailResult = await sendMail(conf.oAuthMail.USER_NAME , email , emailSubject , emailTemplate , { logoUrl , verificationLink })
 
             }
-            res.status(201).json({ message:'A Verification Link has been sent to your Email Id' })  
+            res.status(201).json({ message:'A verification links has been send to your email . Please Verify' , verified : emailCheck[0].verified })  
         }
         //Already registered 
         else if(emailCheck.length !== 0 && emailCheck[0].verified === true){
             console.log("here2")
             //User pls login
-            res.status(201).json({ message:'Already a registered User' })    
+            res.status(201).json({ message:'Already a registered User , Please Log-In' , verified : emailCheck[0].verified})    
         } 
         //Completely new user
         else {
@@ -82,8 +75,8 @@ const register = async(req , res) => {
                 password ,
                 session_token:token
             }) 
-    
-            if(user) res.status(201).json({ user: user._id , message:'Please Verify Email' })    
+            
+            if(user) res.status(201).json({ message:'A verification links has been send to your email . Please Verify ' , verified : user.verified })    
             
         }
         

@@ -1,5 +1,6 @@
 const fs = require('fs')
 const RegisterCheckCluster0 = require('../../models/register_verify')
+const generateJWT = require('../../utils/generatejwt')
 const conf = require('../../config/config')
 
 

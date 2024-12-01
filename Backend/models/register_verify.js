@@ -4,16 +4,6 @@ const bcrypt = require('bcryptjs')
 const sendMail = require('../utils/sendMail')
 const conf = require('../config/config')
 
-// const register_verify_schema = new mongoose.Schema({
-//     email:String , 
-//     // key:String ,
-//     session_token:String , 
-//     password:String , 
-//     date:Date,
-//     time_stamp:String , 
-//     verified:Boolean
-// })
-
 const register_verify_schema = new mongoose.Schema({
     email:{
         type:String,
@@ -63,12 +53,13 @@ register_verify_schema.pre('save' , async function() {
             const mailResult = await sendMail(conf.oAuthMail.USER_NAME , this.email , emailSubject , emailTemplate , { logoUrl , verificationLink })
 
             //need more testing to setup error handling for mailResult
-            console.log(mailResult , "register_verify , line 60");
+            // console.log(mailResult , "register_verify , line 60");
         }
         catch(error){
             // console.log("hello error");
             console.log(error , "line 65 userschema")
-            throw error
+            // throw error
+            return error
         }
     }
     

@@ -1,8 +1,9 @@
 const nodemailer = require("nodemailer")
 const hbs = require('nodemailer-express-handlebars');
 const { OAuth2Client } = require('google-auth-library')
+const handleErrors = require("../errorHandlers/auth_errors")
 const path = require('path');
-const { error } = require("console");
+
 
 //env variables
 const {  MAIL_SERVICE_NAME ,
@@ -79,8 +80,9 @@ const sendMail =  (from , to , subject , template , context) => {
 
         } 
         catch(err) {
-            console.log("unable to get token" ,err)
-            throw err
+            const error = handleErrors(err)
+
+            return error
         }
     })
     

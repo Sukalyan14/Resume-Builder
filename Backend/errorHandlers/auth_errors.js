@@ -1,5 +1,5 @@
 const handleErrors = (err) => {
-    console.log(err);
+    console.log(err.response.data.error_description , err.status);
     // console.log(err.message);
     // console.log( err.errors.email.properties );
     let errors = { email : '' , password: '' , mail:'' }
@@ -16,11 +16,11 @@ const handleErrors = (err) => {
             errors[properties.path] = properties.message
         })
     }
-
+// err.code === 'EAUTH' || err.code === 'ECONNREFUSED'
     //Mail Sent Error
-    if(err.code === 'EAUTH' || err.code === 'ECONNREFUSED' || err.response && err.response.includes('Mailbox quota exceeded') || err.responseCode === 500){
-        // console.log(err.message , err.responseCode);
-        errors.mail = "Mail Not Sent"
+    if((err.status == 400 || err.status == 500) && err.response){
+        // console.log(err.response.data.error_description);
+        errors.mail = "Mail Not Sent , Try again after sometime"
     }
 
     return errors

@@ -22,10 +22,11 @@ function Signup_Login() {
       <div className='w-screen h-[900px] flex relative justify-center items-center px-10'>
       {/* Main page content */}
         <div 
-          className="w-[350px]
+          className="w-[300px]
                     h-[750px]
+                    max-w-[300px]
                     m-3 p-5
-                    flex flex-col justify-evenly
+                    flex flex-col justify-evenly flex-shrink-0
                     bg-form-background 
                     shadow-lg 
                     backdrop-blur-xs
