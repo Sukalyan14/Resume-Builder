@@ -45,7 +45,6 @@ const register = async(req , res) => {
                     
                     const mailResult = await sendMail(conf.oAuthMail.USER_NAME , email , emailSubject , emailTemplate , { logoUrl , verificationLink })
                     
-                    // console.log('Verification Mail sent , Db updated')
                 } else {
                     throw new Error('Verification Status Update Falied')
                 }
@@ -76,11 +75,23 @@ const register = async(req , res) => {
                 session_token:token
             }) 
             
-            if(user) res.status(201).json({ message:'A verification links has been send to your email . Please Verify ' , verified : user.verified })    
-            
-        }
-        
-        
+            if(user) {
+
+                // const webtoken = generateJWT(user._id)
+                // res.cookie('cookie-token' , webtoken , { 
+                //         httpOnly ,
+                //         secure ,
+                //         maxAge:jwtDuration * 1000 ,
+                //         sameSite,
+                //         credentials:true,
+                //         path:'/',
+                //         domain,
+                //     }
+                // )
+
+                res.status(201).json({ message:'A verification links has been send to your email . Please Verify ' , verified : user.verified })    
+            }
+        }        
     }
     catch(err){
         // console.log(err , "auth error print line 33");

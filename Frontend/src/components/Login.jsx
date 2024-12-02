@@ -1,13 +1,18 @@
 import React from 'react'
 import { Input , Button } from './index'
 import { useFormContext } from 'react-hook-form'
+import { axiosClientAuth } from '../constant/axios-client'
 
 const Login = () => {
 
     const { handleSubmit } = useFormContext()
 
-    const submit =  async (data) => {
-        console.log(data)
+    const submit =  async ({ email , password }) => {
+        
+        const response = await axiosClientAuth.post('/login' , {
+            email , password
+        })
+        console.log(response)
     }
     
   return (

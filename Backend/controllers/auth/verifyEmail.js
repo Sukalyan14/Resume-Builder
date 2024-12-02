@@ -57,17 +57,6 @@ const verifyEmail = async (req , res) => {
                 )
                 res.end()
 
-                const webtoken = generateJWT(user._id)
-                res.cookie('cookie-token' , webtoken , { 
-                        httpOnly ,
-                        secure ,
-                        maxAge:jwtDuration * 1000 ,
-                        sameSite,
-                        credentials:true,
-                        path:'/',
-                        domain,
-                    }
-                )
             })
         }
     } else {

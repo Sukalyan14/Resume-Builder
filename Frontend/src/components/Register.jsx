@@ -4,7 +4,6 @@ import { useFormContext } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { togglePopup , updateStatus_Message } from '../feature/customPopupSlice'
 import { axiosClientAuth } from '../constant/axios-client'
-import { switchForm } from '../feature/formSwitchSlice'
 import conf from '../config/config'
 
 function Register() {
