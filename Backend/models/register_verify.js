@@ -36,6 +36,36 @@ register_verify_schema.pre('save' , async function(next) {
     next()
 })
 
+//Encrypt Password only for change
+register_verify_schema.pre('updateOne' , async function(next){
+    
+    const update = this.getUpdate()
+    if(update.$set && update.$set.password){
+        try{
+           const currentDoc = await this.model.findOne(this.getFilter())
+           console.log(currentDoc , update.$set.password)
+
+           if(currentDoc){
+                const passwordCheck = await bcrypt.compare(update.$set.password , currentDoc.password)
+
+                if(passwordCheck){
+                    delete update.$set.password
+                    return next()
+                }
+
+                const salt = await bcrypt.genSalt()
+                update.$set.password = await bcrypt.hash(update.$set.password , salt)
+
+                next()
+           }
+        } catch(err){
+            return next(err)
+        }
+    } else {
+        return next()
+    }
+})
+
 //Fire a Mail before record has been saved to db
 register_verify_schema.pre('save' , async function() {
     

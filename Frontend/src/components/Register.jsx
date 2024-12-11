@@ -1,4 +1,5 @@
-import React from 'react'
+import {useEffect} from 'react'
+import { io } from "socket.io-client";
 import { Input , Button } from './index'
 import { useFormContext } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
@@ -14,24 +15,37 @@ function Register() {
 
     const { handleSubmit , reset } = useFormContext()
 
-    const submit = async ({ email , password }) => {
+    useEffect(() => {
+        const url = conf.server.SERVER_URL + conf.server.SERVER_PORT
+        const socket = io(url)
+
+        socket.on('email-verified' , (data) => {
+            console.log("verfication received" , data)
+        })
+    }, []);
+
+
+    const submit = async ({ email , password , confirm_password }) => {
         
         //bring the popup out
         dispatch(togglePopup())
         // post data
         const response = await axiosClientAuth.post('/register', {
-            email,
-            password 
+            email ,
+            password , 
+            confirm_password 
         })
 
         if(response.data){
+            console.log(response.data)
             dispatch(updateStatus_Message(response.data))
 
             if(response.data.verified) setTimeout(() => {
                 dispatch(togglePopup())
                 reset()
-            } , delay*2)   
+            } , delay*2.5)   
         }
+        //Handle response error
 
         // if(data.user){
             

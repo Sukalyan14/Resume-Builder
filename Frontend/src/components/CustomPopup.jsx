@@ -21,11 +21,11 @@ function CustomPopup() {
     const { popupToggleStatus , message , verified } = useSelector((state) => state.custom_popup)
 
     const { getValues } = useFormContext()
-    
+
     useEffect(() => {
 
-        // start time only if the popup is visible
-        if(popupToggleStatus){
+        // start time only if the popup is visible and have received a message
+        if(popupToggleStatus && message){
         
             const countDown = setInterval(() => {
                 setTImer((prevTimer) => {
@@ -43,7 +43,7 @@ function CustomPopup() {
             return () => clearInterval(countDown);
         }
         
-    }, [timer , popupToggleStatus]);
+    }, [timer , popupToggleStatus , message]);
 
     const resendMailClick = async (e) => {
         e.preventDefault()
@@ -51,9 +51,12 @@ function CustomPopup() {
         setTImer(countStart)
 
         const email = getValues('email')
+        const password = getValues('password')
+        const confirm_password = getValues('confirm_password')
 
         const response = await axiosClientAuth.post('/register', {
-            email,
+            email , password ,
+            confirm_password
         })
         
     }
@@ -72,12 +75,12 @@ function CustomPopup() {
                     />
                 </div>
                 <p className="message">{message}</p>
-                {verified && <button 
+                {!verified && <button 
                     className='resend-mail'
                     disabled={!enableReSend} 
                     onClick={enableReSend ? resendMailClick : () => {}}
                 >Resend Mail</button>}
-                {verified && <p className="timer">{timer}</p>}
+                {!verified && <p className="timer">{timer}</p>}
             </>
         } 
     </CustomPopupContainer>

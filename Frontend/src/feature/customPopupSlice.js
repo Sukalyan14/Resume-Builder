@@ -14,9 +14,15 @@ const customPopupSlice = createSlice({
             state.popupToggleStatus = !state.popupToggleStatus
         },
         updateStatus_Message:(state , action) => {
-            console.log(action.payload ,action.payload.verified)
             state.verfied = action.payload.verified
             state.message = action.payload.message
+            console.log(state.verfied)
+            //if popup appears then only update the message. Else if false then keep it null 
+            // if(state.popupToggleStatus) {
+            //     state.message = action.payload.message
+            // } else {
+            //     state.message = null
+            // }
         }
     }
 })

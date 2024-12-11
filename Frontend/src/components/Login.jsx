@@ -2,17 +2,31 @@ import React from 'react'
 import { Input , Button } from './index'
 import { useFormContext } from 'react-hook-form'
 import { axiosClientAuth } from '../constant/axios-client'
+import { useDispatch } from 'react-redux'
+import { togglePopup , updateStatus_Message } from '../feature/customPopupSlice'
+import conf from '../config/config'
 
 const Login = () => {
+    
+    const delay = conf.countDown.COUNTDOWN_INTERVAL
+
+    const dispatch = useDispatch()
 
     const { handleSubmit } = useFormContext()
 
     const submit =  async ({ email , password }) => {
-        
+        dispatch(togglePopup())
         const response = await axiosClientAuth.post('/login' , {
             email , password
         })
-        console.log(response)
+
+        if(response.data && response.status == 200){
+            dispatch(updateStatus_Message(response.data))
+            sessionStorage.setItem("user" , response.data.user)
+            setTimeout(() => {
+                dispatch(togglePopup())
+            }, delay * 2.5);
+        }
     }
     
   return (

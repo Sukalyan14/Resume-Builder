@@ -1,100 +1,82 @@
 const RegisterCheckCluster0 = require('../../models/register_verify')
-const generate_token = require("../../utils/generateToken")
+const generateToken = require("../../utils/generateToken")
 const handleErrors = require('../../errorHandlers/auth_errors')
 const sendMail = require('../../utils/sendMail')
 const conf = require('../../config/config')
 
 const register = async(req , res) => {
 
-    const { email , password } = req.body
+    const { email , password , confirm_password } = req.body
     
     //Base Constants
     const verficationTokenDuration = conf.oAuthMail.VERIFICATION_TOKEN_DURATION
-
+    
     try{
-        //Check if email is already validated or not here
-        let emailCheck = await RegisterCheckCluster0.find({
-            email,
-        })
-        
-        //Previously tried registering but failed . //Update the session token if token expired pending
-        if(emailCheck.length !== 0 && emailCheck[0].verified === false){
-            
-            const datetime_current = new Date()
-            let diff = (datetime_current - emailCheck[0].date)/1000
+        if(email && password && confirm_password && password === confirm_password) {
+            //Check if email is already validated or not here
+            let emailCheck = await RegisterCheckCluster0.findOne({
+                email,
+            })
 
-            //sendmail
-            const emailSubject = "Email Verification"
-            const emailTemplate = 'emailVerifications'
-            const logoUrl = conf.oAuthMail.LOGO_URL
+            //Check if user has a record or not
+            if(emailCheck){
+                //Check status
+                if(emailCheck.verified) res.status(201).json({ message:'Already a registered User , Please Log-In' , verified : emailCheck.verified})    
+                
+                //Constants for email
+                const emailSubject = "Email Verification"
+                const emailTemplate = 'emailVerifications'
+                const logoUrl = conf.oAuthMail.LOGO_URL
 
-            if(diff >= verficationTokenDuration) {
-                //sendmail and update time and token in db
-                const { token } = generate_token()
-                const verificationLink = conf.VERIFY_ENDPOINT_URL()+"?key="+token
-                const update_verification_status = await RegisterCheckCluster0.updateOne(
-                    { email },
-                    { $set:{
-                        session_token:token , 
-                        date:datetime_current
+                // when verification is false
+                
+                //Token Duration Check
+                const datetime_current = new Date()
+                const diff = (datetime_current - emailCheck.date)/1000
+                
+                if(diff >= verficationTokenDuration) {
+                    //Token Expired
+                    const { token } = generateToken()
+                    const verificationLink = conf.VERIFY_ENDPOINT_URL()+"?key="+token
+
+                    await RegisterCheckCluster0.updateOne(
+                        { email },
+                        { $set:{
+                            session_token:token , 
+                            date:datetime_current
+                            }
                         }
-                    }
-                )
+                    )
 
-                if(update_verification_status.modifiedCount > 0){
-                    
-                    const mailResult = await sendMail(conf.oAuthMail.USER_NAME , email , emailSubject , emailTemplate , { logoUrl , verificationLink })
-                    
+                    await sendMail(conf.oAuthMail.USER_NAME , email , emailSubject , emailTemplate , { logoUrl , verificationLink })
+
                 } else {
-                    throw new Error('Verification Status Update Falied')
+                    // Token is valid
+                    const verificationLink = conf.VERIFY_ENDPOINT_URL()+"?key="+emailCheck.session_token
+
+                    await sendMail(conf.oAuthMail.USER_NAME , email , emailSubject , emailTemplate , { logoUrl , verificationLink })
+                    
                 }
+
+                res.status(201).json({ message:'A verification links has been send to your email . Please Verify ' , verified : emailCheck.verified })
                 
             } else {
-                //just sendmail
-                const verificationLink = conf.VERIFY_ENDPOINT_URL()+"?key="+emailCheck[0].session_token
+                //Create Entry. Completely new user
+                const { token } = generateToken()
+                const user = await RegisterCheckCluster0.create({
+                    email , password , 
+                    session_token:token
+                })
 
-                const mailResult = await sendMail(conf.oAuthMail.USER_NAME , email , emailSubject , emailTemplate , { logoUrl , verificationLink })
-
+                res.status(201).json({ message:'A verification links has been send to your email . Please Verify ' , verified : emailCheck.verified })       
             }
-            res.status(201).json({ message:'A verification links has been send to your email . Please Verify' , verified : emailCheck[0].verified })  
+                   
+        } else {
+            throw new Error('Please Fill the required Fields correctly')
         }
-        //Already registered 
-        else if(emailCheck.length !== 0 && emailCheck[0].verified === true){
-            console.log("here2")
-            //User pls login
-            res.status(201).json({ message:'Already a registered User , Please Log-In' , verified : emailCheck[0].verified})    
-        } 
-        //Completely new user
-        else {
-            console.log("here3")
-            const { token } = generate_token()
-            // completely new user
-            const user = await RegisterCheckCluster0.create({
-                email ,
-                password ,
-                session_token:token
-            }) 
-            
-            if(user) {
-
-                // const webtoken = generateJWT(user._id)
-                // res.cookie('cookie-token' , webtoken , { 
-                //         httpOnly ,
-                //         secure ,
-                //         maxAge:jwtDuration * 1000 ,
-                //         sameSite,
-                //         credentials:true,
-                //         path:'/',
-                //         domain,
-                //     }
-                // )
-
-                res.status(201).json({ message:'A verification links has been send to your email . Please Verify ' , verified : user.verified })    
-            }
-        }        
     }
     catch(err){
-        // console.log(err , "auth error print line 33");
+        // console.log("auth error print line 91" , err );
         const errors = handleErrors(err)
         
         res.status(400).json({ errors })

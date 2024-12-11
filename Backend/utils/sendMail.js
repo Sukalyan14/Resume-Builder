@@ -3,18 +3,18 @@ const hbs = require('nodemailer-express-handlebars');
 const { OAuth2Client } = require('google-auth-library')
 const handleErrors = require("../errorHandlers/auth_errors")
 const path = require('path');
-
+const conf = require('../config/config')
 
 //env variables
-const {  MAIL_SERVICE_NAME ,
-         MAIL_SERVICE_SECURE ,
-         MAIL_SERVICE_PORT , 
+const {  SERVICE ,
+         SERVICE_SECURE ,
+         SERVICE_PORT , 
          USER_NAME ,
          CLIENT_ID ,
          CLIENT_SECRET ,
          REFRESH_TOKEN ,
          REDIRECT_URI
-      } = process.env
+      } = conf.oAuthMail
 
 
 //For accessing the access token .This one refreshes after a certain in interval . Check.env file
@@ -37,9 +37,9 @@ const sendMail =  (from , to , subject , template , context) => {
 
             //smtp config details and creating nodemailer transporter 
             let nodemailerTransporter = nodemailer.createTransport({
-                service : MAIL_SERVICE_NAME,
-                port: MAIL_SERVICE_PORT, // or the appropriate port for your SMTP server
-                secure: MAIL_SERVICE_SECURE, // true for 465, false for other ports
+                service : SERVICE,
+                port: SERVICE_PORT, // or the appropriate port for your SMTP server
+                secure: SERVICE_SECURE, // true for 465, false for other ports
                 auth: {
                     type:'OAuth2',
                     user : USER_NAME,

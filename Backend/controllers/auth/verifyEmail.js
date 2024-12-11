@@ -1,13 +1,10 @@
 const fs = require('fs')
 const RegisterCheckCluster0 = require('../../models/register_verify')
-const generateJWT = require('../../utils/generatejwt')
 const conf = require('../../config/config')
-
+const socketHandler = require('../../socket/socketHandler')
 
 const verifyEmail = async (req , res) => {
 
-    //Find a way to get email as well
-    // console.log(req)
     const token = req.query.key
     
     //Base Constants
@@ -23,58 +20,61 @@ const verifyEmail = async (req , res) => {
         const datetime_current = new Date()
         let diff = (datetime_current - token_check_result[0].date)/1000
         
-        if( diff >= verficationTokenDuration && token === token_check_result[0].session_token ) {
+        if(diff < verficationTokenDuration && token === token_check_result[0].session_token){
 
-            console.log("token is invalid");
-
-            res.writeHead(404 , {'Content-Type': 'text/html'})
-
-            fs.readFile('./emailTemplates/error.html' , null , (error , data) => {
-                if(error){
-                    res.write("Oops , link might be invalid")
-                } else {
-                    res.write(data)
-                }
-                res.end()
-            })
-        } else {
-
-            console.log("token vaild email verified");
+            //valid Token
+            // await RegisterCheckCluster0.updateOne(
+            //     { session_token: token } ,
+            //     { $set: { verified:true } } ,
+            //     { new:true}
+            // )
+            const io = socketHandler.getIO()
+            io.emit('email-verified', {
+                email: token_check_result[0].email,
+                verified:true
+            });
 
             res.writeHead(200 , {'Content-Type': 'text/html'})
-            
-            //if readFile fails just show message . If readfile is successful the show template
-            fs.readFile('./emailTemplates/success.html' , null , async (error , data) => {
+
+            fs.readFile('./emailTemplates/success.html' , 'utf8' , async (error , data) => {
+
                 if(error){
                     res.write("Congratulations! Your email address was successfully verified. You can now login to your account.")
                 } else {
-                    res.write(data)
+                    const processesHTML = data.replaceAll('${REDIRECT_URL}' , 'http://localhost:5173/')
+                    
+                    res.write(processesHTML)
                 }
-                const update_verification_status = await RegisterCheckCluster0.updateOne(
-                    { session_token: token } ,
-                    { $set: { verified:true } } ,
-                    { new:true}
-                )
                 res.end()
-
+            })
+        }
+        else {
+            res.writeHead(404 , {'Content-Type': 'text/html'})
+            const message = "Verification Token Expired"
+            fs.readFile('./emailTemplates/error.html' , 'utf8' , (error , data) => {
+                if(error){
+                    res.write(message)
+                } else {
+                    const processesHTML = data.replace('${message}' , message )
+                    res.write(processesHTML)
+                }
+                res.end()
             })
         }
     } else {
-        console.log("Issue Detected . Unable to verify")
         res.writeHead(404 , {'Content-Type': 'text/html'})
-
-        fs.readFile('./emailTemplates/error.html' , null , (error , data) => {
-            if(error){
-                res.write("Oops , link might be invalid")
-            } else {
-                res.write(data)
-            }
+            const message = "Invalid Link , token not found"
+            fs.readFile('./emailTemplates/error.html' , null , (error , data) => {
+                if(error){
+                    res.write(message)
+                } else {
+                    const processesHTML = data.replace('${message}' , message )
+                    
+                    res.write(processesHTML)
+                }
             res.end()
         })
     }
-    
-    //Check token validity
-    
 }
 
 module.exports = verifyEmail 

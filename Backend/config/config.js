@@ -6,9 +6,10 @@ const conf = {
     dev : {
         PORT : process.env.PORT || 3000,
         BASE_URL : process.env.BASE_URL,
+        FRONTEND_BASEURL : process.env.FRONTEND_BASEURL,
         VERIFY_ENDPOINT_URL : () => process.env.VERIFY_ENDPOINT_URL.replace("${BASE_URL}" , conf[env].BASE_URL).replace("${PORT}" , conf[env].PORT) ,
         oAuthMail : {
-            SERVICE : process.env.MAIL_SERVICE,
+            SERVICE : process.env.MAIL_SERVICE_NAME,
             SERVICE_SECURE : process.env.MAIL_SERVICE_SECURE,
             SERVICE_PORT : process.env.MAIL_SERVICE_PORT,
             USER_NAME : process.env.USER_NAME,

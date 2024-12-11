@@ -62,23 +62,33 @@
         <div>
             <i class="fa fa-check-circle" style="font-size:60px;color:green;" aria-hidden="true"></i>
         </div>
-        <a href="http://localhost:5173/">Incase of failure Click this button</a>
+        <a href='${REDIRECT_URL}' >Incase of failure , Click this Link</a>
     </div>
     <!-- <p>If above button is not working then copy this Link in  </p> -->
 </body>
 <script>
-    let redirectCountDown = document.querySelector('#redirectCountDown')
-    let countDown = 5
-    let timer = setInterval(() => {
-                   
-                   if(countDown <= 0) {
-                       window.location.href = 'http://localhost:5173/';
-                       countDown = 5 //reset countDown
-                       redirectCountDown.innerText = 'Redirecting...'
-                       clearInterval(timer);
-                   }
-                   countDown--;
-                   redirectCountDown.innerText = countDown 
-               }, 1000);
+    let countdown = 5;
+    const redirectCountDown = document.getElementById('redirectCountDown');
+    console.log(window.opener)
+    function startCountdown() {
+        const timer = setInterval(() => {
+            countdown--;
+            redirectCountDown.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(timer);
+                
+                // Send message to parent window
+                window.opener.postMessage({
+                    type: 'EMAIL_VERIFIED',
+                    status: 'success'
+                }, '${REDIRECT_URL}');
+
+                // window.location.href='${REDIRECT_URL}'
+            }
+        }, 1000);
+    }
+
+    window.onload = startCountdown
 </script>
 </html>
