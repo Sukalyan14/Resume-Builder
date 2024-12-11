@@ -35,6 +35,15 @@ class socketHandler {
         }
         return this.io;
     }
+
+    emailVerificationCheck(...values){
+        
+        const [ email , verified]  = values
+        this.io.emit('email-verified' , {
+            verified , 
+            message : "Email Verified. Please login"
+        })
+    }
 }
 
 

@@ -1,6 +1,7 @@
+import { io } from "socket.io-client";
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
-import { togglePopup } from '../feature/customPopupSlice'
+import { togglePopup , updateStatus_Message } from '../feature/customPopupSlice'
 import { useState , useEffect } from "react";
 import { CustomPopupContainer } from './index'
 import { useFormContext } from "react-hook-form";
@@ -23,7 +24,19 @@ function CustomPopup() {
     const { getValues } = useFormContext()
 
     useEffect(() => {
+        if(popupToggleStatus){
+            console.log(456)
+            const url = conf.server.SERVER_URL + conf.server.SERVER_PORT
+            const socket = io(url)
+    
+            socket.on('email-verified' , (data) => {
+                // console.log("verfication received" , data)
+                dispatch(updateStatus_Message(data))
+            })
+        }
+    }, []);
 
+    useEffect(() => {
         // start time only if the popup is visible and have received a message
         if(popupToggleStatus && message){
         
@@ -58,6 +71,15 @@ function CustomPopup() {
             email , password ,
             confirm_password
         })
+
+        if(response.data){
+            dispatch(updateStatus_Message(response.data))
+
+            if(response.data.verified) setTimeout(() => {
+                dispatch(togglePopup())
+                reset()
+            } , delay*2.5)   
+        }
         
     }
 
@@ -71,6 +93,9 @@ function CustomPopup() {
                         onClick={(e) => {
                             e.preventDefault()
                             dispatch(togglePopup())
+                            dispatch(updateStatus_Message({
+                                message:null
+                            }))
                         }}
                     />
                 </div>

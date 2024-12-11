@@ -28,11 +28,7 @@ const verifyEmail = async (req , res) => {
             //     { $set: { verified:true } } ,
             //     { new:true}
             // )
-            const io = socketHandler.getIO()
-            io.emit('email-verified', {
-                email: token_check_result[0].email,
-                verified:true
-            });
+            socketHandler.emailVerificationCheck(token_check_result[0].email , true)
 
             res.writeHead(200 , {'Content-Type': 'text/html'})
 
