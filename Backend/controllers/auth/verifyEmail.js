@@ -6,7 +6,7 @@ const socketHandler = require('../../socket/socketHandler')
 const verifyEmail = async (req , res) => {
 
     const token = req.query.key
-    
+    console.log(req)
     //Base Constants
     const verficationTokenDuration = conf.oAuthMail.VERIFICATION_TOKEN_DURATION
     
@@ -23,11 +23,11 @@ const verifyEmail = async (req , res) => {
         if(diff < verficationTokenDuration && token === token_check_result[0].session_token){
 
             //valid Token
-            // await RegisterCheckCluster0.updateOne(
-            //     { session_token: token } ,
-            //     { $set: { verified:true } } ,
-            //     { new:true}
-            // )
+            await RegisterCheckCluster0.updateOne(
+                { session_token: token } ,
+                { $set: { verified:true } } ,
+                { new:true}
+            )
             socketHandler.emailVerificationCheck(token_check_result[0].email , true)
 
             res.writeHead(200 , {'Content-Type': 'text/html'})

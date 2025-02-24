@@ -2,6 +2,7 @@ import { Input , Button } from './index'
 import { useFormContext } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { togglePopup , updateStatus_Message } from '../feature/customPopupSlice'
+import { switchForm } from '../feature/formSwitchSlice'
 import { axiosClientAuth } from '../constant/axios-client'
 import conf from '../config/config'
 
@@ -14,31 +15,27 @@ function Register() {
     const { handleSubmit , reset } = useFormContext()
 
     const submit = async ({ email , password , confirm_password }) => {
-        
-        //bring the popup out
-        dispatch(togglePopup())
-        // post data
-        const response = await axiosClientAuth.post('/register', {
-            email ,
-            password , 
-            confirm_password 
-        })
-
-        if(response.data){
-            dispatch(updateStatus_Message(response.data))
-
-            if(response.data.verified) setTimeout(() => {
-                dispatch(togglePopup())
-                reset()
-            } , delay*2.5)   
+        try {
+            dispatch(togglePopup())
+            // post data
+            const response = await axiosClientAuth.post('/register', {
+                email ,
+                password , 
+                confirm_password 
+            })
+    
+            if(response.data){
+                dispatch(updateStatus_Message(response.data))
+    
+                if(response.data.verified) setTimeout(() => {
+                    dispatch(togglePopup())
+                    reset()
+                    dispatch(switchForm())
+                } , delay*2.5)   
+            }    
+        } catch (error) {
+            console.log(error)
         }
-        //Handle response error
-
-        // if(data.user){
-            
-        //     //Check for verification
-        
-        // }
     }
 
   return (

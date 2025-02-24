@@ -14,18 +14,18 @@ function CustomPopup() {
     const delay = conf.countDown.COUNTDOWN_INTERVAL
     const countStart = conf.countDown.COUNTDOWN_START
 
-    const [timer , setTImer] = useState(countStart)
+    const [timer , setTimer] = useState(countStart)
     const [enableReSend , setEnableReSend] = useState(false)
 
     const dispatch = useDispatch()
     // const popupToggleStatus = useSelector((state) => state.custom_popup.popupToggleStatus)
     const { popupToggleStatus , message , verified } = useSelector((state) => state.custom_popup)
 
-    const { getValues } = useFormContext()
+    const { getValues , reset } = useFormContext()
 
     useEffect(() => {
         if(popupToggleStatus){
-            console.log(456)
+            
             const url = conf.server.SERVER_URL + conf.server.SERVER_PORT
             const socket = io(url)
     
@@ -41,7 +41,7 @@ function CustomPopup() {
         if(popupToggleStatus && message){
         
             const countDown = setInterval(() => {
-                setTImer((prevTimer) => {
+                setTimer((prevTimer) => {
                     // If the next value would be zero or less, stop at zero
                     if(prevTimer <= 1){
                         clearInterval(countDown)

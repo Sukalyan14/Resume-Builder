@@ -20,7 +20,7 @@ const register = async(req , res) => {
 
             //Check if user has a record or not
             if(emailCheck){
-                //Check status
+                //Check status and send response if true
                 if(emailCheck.verified) res.status(201).json({ message:'Already a registered User , Please Log-In' , verified : emailCheck.verified})    
                 
                 //Constants for email
@@ -79,7 +79,7 @@ const register = async(req , res) => {
         // console.log("auth error print line 91" , err );
         const errors = handleErrors(err)
         
-        res.status(400).json({ errors })
+        res.status(errors.status).json({ message:errors.message })
     }
 }
 

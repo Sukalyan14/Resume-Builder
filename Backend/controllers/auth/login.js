@@ -22,7 +22,7 @@ const login = async (req , res) => {
             email
         })
 
-        if(registeredUserCheck){
+        if(registeredUserCheck && registeredUserCheck.verified){
 
             //check password
             const passwordCheck = bcrypt.compare(password , registeredUserCheck.password)
@@ -53,21 +53,24 @@ const login = async (req , res) => {
                         message:"Login Successful"
                     })
                 } else {
-                    res.status(500).json({message:"Login Failed"})
+                    // res.status(500).json({message:"Login Failed"})
+                    throw new Error('Login Failed')
                 }
                 
             } else {
-                res.status(400).json({message:"Incorrect password"})
+                // res.status(400).json({message:"Incorrect password"})
+                throw new Error('Incorrect Password')
             }
             
         } else {
-            res.status(500).json({message:"Not a registered User. Please Signup first"})
+            // res.status(500).json({message:"Not a registered User. Please Signup first"})
+            throw new Error('Not a registered User. Please Signup first')
         }
     
     } catch (err) {
         const errors = handleErrors(err)
         
-        res.status(400).json({ errors })
+        res.status(errors.status).json({ message:errors.message })
     }
     
 }

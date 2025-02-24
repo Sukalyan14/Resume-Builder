@@ -3,6 +3,7 @@ import { BottomContainer, Login , Register , TopContainer , CustomPopup } from '
 import Bg from '../assets/pngegg.png'
 import { useSelector } from 'react-redux'
 import { useForm , FormProvider } from 'react-hook-form'
+import { motion , AnimatePresence } from 'framer-motion'
 
 function Signup_Login() {
 
@@ -34,7 +35,27 @@ function Signup_Login() {
                     overflow-hidden"
         >
             <TopContainer text={formState ? ["Create" , "An Account" , "Please Sign-Up to Contnue!"]  : ["Welcome" , "Back" , "Please Sign-In to Continue!"]}/>
-            {formState ?  <Register /> : <Login />}
+            {/* {formState ?  <Register /> : <Login />} */}
+            <AnimatePresence mode='wait'>
+              {formState ? <motion.div
+                key="register"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.75 }}
+              >
+                <Register/>
+              </motion.div> : 
+              <motion.div
+                key="login"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.75 }}
+              >
+                <Login/>
+              </motion.div>}
+            </AnimatePresence>
             <BottomContainer text={formState ? ["Already a member? " , "Login"]  : ["Not a member? " , "Register"] }/>          
         </div>
         

@@ -27,18 +27,13 @@ const TopCurtain = styled.div`
     &::after{
         content: "";
         width: 275%;
-        /* height:650px; */
-        height: 310%;
-        /* height: ${(prop) => (prop.$formState ? '34rem' : '35rem')}; */
-        /* height: calc(var(--curtain-height) * var(--curtain-multiplier)); */
+        height: 300%;
         position: absolute;
-        /* top: -500px;*/
-        /* top: -250%; */
-        top: ${(prop) => (prop.$formState ? '-225%' : '-210%')};
+        top: ${(prop) => (prop.$animationTrigger ? '-225%' : '-210%')};
         left: -50%;
         transform: rotate(-50deg);
         border-radius: 50%;
-        background: var(--top-container);
+        background: var(--button-color);
         z-index: -9;
         animation: ${(prop) => ( prop.$animationTrigger && Backdrop_Animation )} 1.5s ease-in-out;
     }

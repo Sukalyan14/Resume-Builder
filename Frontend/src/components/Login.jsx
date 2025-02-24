@@ -16,17 +16,28 @@ const Login = () => {
 
     const submit =  async ({ email , password }) => {
         dispatch(togglePopup())
-        const response = await axiosClientAuth.post('/login' , {
-            email , password
-        })
-
-        if(response.data && response.status == 200){
-            dispatch(updateStatus_Message(response.data))
-            sessionStorage.setItem("user" , response.data.user)
-            setTimeout(() => {
-                dispatch(togglePopup())
-            }, delay * 2.5);
+        try {
+            const response = await axiosClientAuth.post('/login' , {
+                email , password
+            })
+            
+            if(response.data && response.status == 200){
+                dispatch(updateStatus_Message(response.data))
+                sessionStorage.setItem("user" , response.data.user)
+                setTimeout(() => {
+                    dispatch(togglePopup())
+                }, delay * 2.5);
+            } else {
+                
+            } 
+                
+        } catch (error) {
+            console.log(error.response.data.message , error.response.status)
+            dispatch(updateStatus_Message({
+                message:`${error.response.status} . ${error.response.data.message}`
+            }))
         }
+        
     }
     
   return (

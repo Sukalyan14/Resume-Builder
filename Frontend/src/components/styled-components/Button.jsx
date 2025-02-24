@@ -29,7 +29,7 @@ const ButtonStyled = styled.button`
         right: 50%;
         bottom: 0;
         opacity: 0;
-        background: var(--top-container);
+        background: var(--button-color);
         border-radius: 100px;
         z-index: -2;
     }

@@ -4,14 +4,18 @@ import { FcGoogle } from "react-icons/fc"
 import { FaGithub , FaApple , FaFacebookF } from "react-icons/fa"
 import { useDispatch } from 'react-redux'
 import { switchForm } from '../../feature/formSwitchSlice'
+import { useFormContext } from 'react-hook-form'
 
 function BottomContainer({ text }) {
 
     const dispatch = useDispatch()
     
+    const { reset } = useFormContext()
+
     const triggerSwitch = (e) => {
         e.preventDefault()
-        dispatch(switchForm())
+        reset()
+        dispatch(switchForm())    
     }
     
   return (

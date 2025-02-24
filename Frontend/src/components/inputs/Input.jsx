@@ -33,7 +33,7 @@ const Input = forwardRef( ({ label , type , placeholder , ...props } , ref) => {
         checkConfirmPassword : (value) => getValues("password") === value || "Passwords did not match"
     }
     
-    const normalizedLabel = label.toLowerCase().replace('_', ' ')
+    const normalizedLabel = label.toLowerCase().replaceAll('_', ' ')
 
     //Clear Input field
     const clearField = (e) => {
