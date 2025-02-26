@@ -8,7 +8,10 @@ const conf = require('./config/config.js')
 const router = require('./routes/auth_route.js');
 const socketHandler = require('./socket/socketHandler')
 const connectDb = require('./db/connect.js')
+const CustomError = require('./errorHandlers/CustomError');
+const globalErrorHandler = require('./errorHandlers/globalErrorHandler');
 require('dotenv').config();
+
 //Loads the handlebars module
 // const handlebars = require('express-handlebars');
 
@@ -32,6 +35,14 @@ app.use(cors(corsConfig));
 
 // Register the routes with appropriate paths
 app.use('/auth', router);
+//Securing routes
+app.all('*' , (req , res , next) => {
+    const err = new CustomError(`Can't find the ${req.originalUrl} on the server` , 404)
+    next(err)
+})
+
+//Global Error handler
+app.use(globalErrorHandler)
 
 //Socket connect
 socketHandler.initSocket(httpServer , corsConfig)

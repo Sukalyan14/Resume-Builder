@@ -30,7 +30,7 @@ function CustomPopup() {
             const socket = io(url)
     
             socket.on('email-verified' , (data) => {
-                // console.log("verfication received" , data)
+                console.log("verfication received" , data)
                 dispatch(updateStatus_Message(data))
             })
         }

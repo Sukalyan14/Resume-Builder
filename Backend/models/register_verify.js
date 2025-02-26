@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const { isEmail } = require('validator')
 const bcrypt = require('bcryptjs')
-const sendMail = require('../utils/sendMail')
+const sendMail  = require('../mailerSend/sendMail')
 const conf = require('../config/config')
 
 const register_verify_schema = new mongoose.Schema({
@@ -39,31 +39,44 @@ register_verify_schema.pre('save' , async function(next) {
 //Encrypt Password only for change
 register_verify_schema.pre('updateOne' , async function(next){
     
-    const update = this.getUpdate()
-    if(update.$set && update.$set.password){
-        try{
-           const currentDoc = await this.model.findOne(this.getFilter())
-           console.log(currentDoc , update.$set.password)
+    //Send email when updating token
+    const update = this.getupdate().$set
+    const emailFromFilter = this.getFilter().email
 
-           if(currentDoc){
-                const passwordCheck = await bcrypt.compare(update.$set.password , currentDoc.password)
-
-                if(passwordCheck){
-                    delete update.$set.password
-                    return next()
-                }
-
-                const salt = await bcrypt.genSalt()
-                update.$set.password = await bcrypt.hash(update.$set.password , salt)
-
-                next()
-           }
-        } catch(err){
-            return next(err)
-        }
-    } else {
-        return next()
+    if(update.session_token && update.date && emailFromFilter){
+    
+        const verificationLink = `${conf.VERIFY_ENDPOINT_URL()}?key=${update.session_token}`
+        await sendMail(email , verificationLink)
     }
+
+    
+
+    
+    //Only for forget password
+    // if(update.$set && update.$set.password){
+    //     try{
+    //        const currentDoc = await this.model.findOne(this.getFilter())
+    //        console.log(currentDoc , update.$set.password)
+
+    //        if(currentDoc){
+    //             const passwordCheck = await bcrypt.compare(update.$set.password , currentDoc.password)
+
+    //             if(passwordCheck){
+    //                 delete update.$set.password
+    //                 return next()
+    //             }
+
+    //             const salt = await bcrypt.genSalt()
+    //             update.$set.password = await bcrypt.hash(update.$set.password , salt)
+
+    //             next()
+    //        }
+    //     } catch(err){
+    //         return next(err)
+    //     }
+    // } else {
+    //     return next()
+    // }
 })
 
 //Fire a Mail before record has been saved to db
@@ -73,14 +86,8 @@ register_verify_schema.pre('save' , async function() {
         
         let verificationLink = conf.VERIFY_ENDPOINT_URL()+"?key="+this.session_token;
         
-        //Template Constants
-        const emailSubject = "Email Verification"
-        const emailTemplate = 'emailVerifications'
-        const logoUrl = conf.oAuthMail.LOGO_URL
-        // const emailTemplatePath = path.join(__dirname, 'emailTemplates', `${emailTemplate}.handlebars`);
-        
         try{
-            const mailResult = await sendMail(conf.oAuthMail.USER_NAME , this.email , emailSubject , emailTemplate , { logoUrl , verificationLink })
+            // await sendMail(this.email , verificationLink)
 
             //need more testing to setup error handling for mailResult
             // console.log(mailResult , "register_verify , line 60");
@@ -94,5 +101,6 @@ register_verify_schema.pre('save' , async function() {
     }
     
 })
+
 
 module.exports = mongoose.model('Registration' , register_verify_schema)  

@@ -8,17 +8,9 @@ const conf = {
         BASE_URL : process.env.BASE_URL,
         FRONTEND_BASEURL : process.env.FRONTEND_BASEURL,
         VERIFY_ENDPOINT_URL : () => process.env.VERIFY_ENDPOINT_URL.replace("${BASE_URL}" , conf[env].BASE_URL).replace("${PORT}" , conf[env].PORT) ,
-        oAuthMail : {
-            SERVICE : process.env.MAIL_SERVICE_NAME,
-            SERVICE_SECURE : process.env.MAIL_SERVICE_SECURE,
-            SERVICE_PORT : process.env.MAIL_SERVICE_PORT,
-            USER_NAME : process.env.USER_NAME,
-            CLIENT_ID : process.env.CLIENT_ID,
-            CLIENT_SECRET : process.env.CLIENT_SECRET,
-            REFRESH_TOKEN : process.env.REFRESH_TOKEN,
-            REDIRECT_URI : process.env.REDIRECT_URI,
-            LOGO_URL : process.env.LOGO_URL,
-            VERIFICATION_TOKEN_DURATION : process.env.VERIFICATION_TOKEN_DURATION,
+        emailSender : {
+            TOKEN:process.env.TOKEN,
+            VERIFICATION_TOKEN_DURATION:process.env.VERIFICATION_TOKEN_DURATION
         },
         db : {
             // MONGO_PASSWORD : process.env.MONGO_PASSWORD,

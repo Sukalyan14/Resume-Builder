@@ -1,86 +1,84 @@
 const RegisterCheckCluster0 = require('../../models/register_verify')
 const generateToken = require("../../utils/generateToken")
 const handleErrors = require('../../errorHandlers/auth_errors')
-const sendMail = require('../../utils/sendMail')
+const sendMail = require('../../mailerSend/sendMail')
 const conf = require('../../config/config')
+const asyncWrapper = require('../../utils/asyncWrapper')
+const CustomError = require("../../errorHandlers/CustomError")
 
-const register = async(req , res) => {
-
+const register = asyncWrapper( async (req , res , next) => {
+    
     const { email , password , confirm_password } = req.body
     
-    //Base Constants
-    const verficationTokenDuration = conf.oAuthMail.VERIFICATION_TOKEN_DURATION
+    //Checks and individual responses
+    if(!email) {
+        const error = new CustomError("No email found. Please provide email, Its mandatory" , 404)
+        return next(error)
+    }
+
+    if(!password){
+        const error = new CustomError("No password . Please provide a password, Its mandatory" , 404)
+        return next(error)
+    }
+
+    if(password !== confirm_password || !confirm_password){
+        const error = new CustomError("Please confirm your password . Your password and confiramation does not match . Its mandatory" , 404)
+        return next(error)
+    }
+
+    const verficationTokenDuration = conf.emailSender.VERIFICATION_TOKEN_DURATION
+
+    //Check if email exists or not.
+    let emailCheck = await RegisterCheckCluster0.findOne({ email })
     
-    try{
-        if(email && password && confirm_password && password === confirm_password) {
-            //Check if email is already validated or not here
-            let emailCheck = await RegisterCheckCluster0.findOne({
-                email,
-            })
-
-            //Check if user has a record or not
-            if(emailCheck){
-                //Check status and send response if true
-                if(emailCheck.verified) res.status(201).json({ message:'Already a registered User , Please Log-In' , verified : emailCheck.verified})    
-                
-                //Constants for email
-                const emailSubject = "Email Verification"
-                const emailTemplate = 'emailVerifications'
-                const logoUrl = conf.oAuthMail.LOGO_URL
-
-                // when verification is false
-                
-                //Token Duration Check
-                const datetime_current = new Date()
-                const diff = (datetime_current - emailCheck.date)/1000
-                
-                if(diff >= verficationTokenDuration) {
-                    //Token Expired
-                    const { token } = generateToken()
-                    const verificationLink = conf.VERIFY_ENDPOINT_URL()+"?key="+token
-
-                    await RegisterCheckCluster0.updateOne(
-                        { email },
-                        { $set:{
-                            session_token:token , 
-                            date:datetime_current
-                            }
-                        }
-                    )
-
-                    await sendMail(conf.oAuthMail.USER_NAME , email , emailSubject , emailTemplate , { logoUrl , verificationLink })
-
-                } else {
-                    // Token is valid
-                    const verificationLink = conf.VERIFY_ENDPOINT_URL()+"?key="+emailCheck.session_token
-
-                    await sendMail(conf.oAuthMail.USER_NAME , email , emailSubject , emailTemplate , { logoUrl , verificationLink })
-                    
-                }
-
-                res.status(201).json({ message:'A verification links has been send to your email . Please Verify ' , verified : emailCheck.verified })
-                
-            } else {
-                //Create Entry. Completely new user
-                const { token } = generateToken()
-                const user = await RegisterCheckCluster0.create({
-                    email , password , 
-                    session_token:token
-                })
-
-                res.status(201).json({ message:'A verification links has been send to your email . Please Verify ' , verified : emailCheck.verified })       
-            }
-                   
-        } else {
-            throw new Error('Please Fill the required Fields correctly')
-        }
-    }
-    catch(err){
-        // console.log("auth error print line 91" , err );
-        const errors = handleErrors(err)
+    if(emailCheck){
         
-        res.status(errors.status).json({ message:errors.message })
+        //Already a verified User
+        if(emailCheck.verified) res.status(200).json({
+            message: 'Already a registered User , Please Log-In',
+            verified: emailCheck.verified 
+        })
+
+        const datetime_current = new Date()
+        const diff = (datetime_current - emailCheck.date)/1000
+        
+        //Token Expired, so update the token and resend email
+        // if(diff >= verficationTokenDuration) {
+            console.log("here")
+            const { token } = generateToken()
+            const verificationLink = `${conf.VERIFY_ENDPOINT_URL()}?key=${token}`
+
+            await RegisterCheckCluster0.updateOne(
+                { email }, //filter
+                { $set:{
+                    session_token:token,
+                    date:datetime_current
+                } } //update values
+            )
+
+        // } else {
+
+        //     const verificationLink = `${conf.VERIFY_ENDPOINT_URL()}?key=${emailCheck.session_token}`
+
+        //     await sendMail(email , verificationLink)
+        // }
+
+        res.status(200).json({ 
+                message:'A verification links has been send to your email . Please Verify the email' ,
+                verified : emailCheck.verified })
+        
+    } else {
+        const { token } = generateToken()
+        const user = await RegisterCheckCluster0.create({
+            email , password , 
+            session_token:token
+        })
+
+        res.status(201).json({
+            message:'A verification links has been send to your email . Please Verify the email',
+        })
     }
-}
+
+})
 
 module.exports = register 
