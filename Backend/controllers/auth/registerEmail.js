@@ -43,7 +43,7 @@ const register = asyncWrapper( async (req , res , next) => {
         const diff = (datetime_current - emailCheck.date)/1000
         
         //Token Expired, so update the token and resend email
-        // if(diff >= verficationTokenDuration) {
+        if(diff >= verficationTokenDuration) {
             console.log("here")
             const { token } = generateToken()
             const verificationLink = `${conf.VERIFY_ENDPOINT_URL()}?key=${token}`
@@ -56,12 +56,13 @@ const register = asyncWrapper( async (req , res , next) => {
                 } } //update values
             )
 
-        // } else {
+        } else {
 
-        //     const verificationLink = `${conf.VERIFY_ENDPOINT_URL()}?key=${emailCheck.session_token}`
+            const verificationLink = `${conf.VERIFY_ENDPOINT_URL()}?key=${emailCheck.session_token}`
 
-        //     await sendMail(email , verificationLink)
-        // }
+            const response = await sendMail(email , verificationLink)
+            console.log(response)
+        }
 
         res.status(200).json({ 
                 message:'A verification links has been send to your email . Please Verify the email' ,

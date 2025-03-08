@@ -30,9 +30,10 @@ const register_verify_schema = new mongoose.Schema({
 
 //Encrypting Password
 register_verify_schema.pre('save' , async function(next) {
+    console.log(this.password.length)
     const salt = await bcrypt.genSalt()
     this.password = await bcrypt.hash(this.password , salt)
-
+    console.log(this.password.length)
     next()
 })
 
@@ -40,16 +41,16 @@ register_verify_schema.pre('save' , async function(next) {
 register_verify_schema.pre('updateOne' , async function(next){
     
     //Send email when updating token
-    const update = this.getupdate().$set
+    const update = this.getUpdate().$set
     const emailFromFilter = this.getFilter().email
 
     if(update.session_token && update.date && emailFromFilter){
     
         const verificationLink = `${conf.VERIFY_ENDPOINT_URL()}?key=${update.session_token}`
-        await sendMail(email , verificationLink)
+        await sendMail(emailFromFilter , verificationLink)
     }
 
-    
+    next()
 
     
     //Only for forget password

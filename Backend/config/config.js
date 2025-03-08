@@ -1,9 +1,9 @@
 require('dotenv').config()
 
-const env = process.env.NODE_ENV || 'dev'
+const env = process.env.NODE_ENV
 
 const conf = {
-    dev : {
+    development : {
         PORT : process.env.PORT || 3000,
         BASE_URL : process.env.BASE_URL,
         FRONTEND_BASEURL : process.env.FRONTEND_BASEURL,

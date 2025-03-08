@@ -47,7 +47,8 @@ app.use(globalErrorHandler)
 //Socket connect
 socketHandler.initSocket(httpServer , corsConfig)
 
-const start = async () => {
+//Start the server
+const server = async () => {
     try{
         await connectDb(conf.db.MONGO_CONNECT_STRING)
         httpServer.listen(port, () => console.log(`Db Connected && Server Listening at ${port}....`));
@@ -57,4 +58,23 @@ const start = async () => {
     }
 }
 
-start()
+server()
+
+//Handle Expections
+process.on('unhandledRejection' , (err) => {
+    console.log(err.name , err.message)
+    console.log('Unhandled Rejection Occured, shutting down')
+
+    httpServer.close(() => {
+        process.exit(1)
+    })
+})
+
+process.on('uncaughtException' , (err) => {
+    console.log(err.name , err.message)
+    console.log('Unhandled Expection Occured, shutting down')
+
+    httpServer.close(() => {
+        process.exit(1)
+    })
+})
